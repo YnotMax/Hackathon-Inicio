@@ -4,9 +4,17 @@ import { Button } from "../components/ui/Button";
 import { useNavigate } from "react-router-dom";
 import { calculateTimeLeft } from "../utils/timer";
 import { Clock, Server, Users, Radio, Zap, Presentation, Code, Plus, CheckCircle, AlertTriangle, Activity, MapPin, Trophy } from "lucide-react";
-import { PostModal } from "../components/ui/PostModal";
+import { PostModal, PostData } from "../components/ui/PostModal";
+import { useAuth } from "../contexts/AuthContext";
 
-const TIMELINE_DATA = [
+export type TimelineEvent = PostData & {
+  status: string;
+  tasks: string[];
+  log: string;
+  icon: any;
+};
+
+const TIMELINE_DATA: TimelineEvent[] = [
   {
     id: "phase1",
     phase: "PHASE_01",
@@ -18,20 +26,26 @@ const TIMELINE_DATA = [
     media: [
       {
         type: "image",
-        url: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80",
-        description: "Equipe em prontidão. Todos os sistemas iniciais online e operacionais. Preparativos finalizados para o sprint."
+        url: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&h=800&q=80",
+        description: "Foto horizontal: Equipe em prontidão. Todos os sistemas iniciais online e operacionais."
+      },
+      {
+        type: "image",
+        url: "https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&w=800&h=1200&q=80",
+        description: "Foto vertical: Foco no código e infraestrutura do servidor."
       },
       {
         type: "video",
         url: "https://www.w3schools.com/html/mov_bbb.mp4",
-        description: "Teste de stream de vídeo de alinhamento."
+        description: "Vídeo: Teste de stream de vídeo de alinhamento."
       }
-    ] as any
+    ]
   },
   {
     id: "phase2",
     phase: "PHASE_02",
     title: "KICKOFF & MATCHMAKING",
+    // @ts-ignore
     status: "AGUARDANDO",
     tasks: [],
     log: "",
@@ -42,34 +56,37 @@ const TIMELINE_DATA = [
         url: "https://images.unsplash.com/photo-1540317580384-e5d43616b9aa?auto=format&fit=crop&w=1200&q=80",
         description: "Palco principal sendo preparado para o grande kickoff do Hackathon."
       }
-    ] as any
+    ]
   },
   {
     id: "phase3",
     phase: "PHASE_03",
     title: "DESENVOLVIMENTO TÁTICO",
+    // @ts-ignore
     status: "AGUARDANDO",
     tasks: [],
     log: "",
     icon: Code,
-    media: [] as any
+    media: []
   },
   {
     id: "phase4",
     phase: "PHASE_04",
     title: "PITCH & ENTREGA",
+    // @ts-ignore
     status: "AGUARDANDO",
     tasks: [],
     log: "",
     icon: Presentation,
-    media: [] as any
+    media: []
   }
 ];
 
 export default function Bunker() {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft("2026-06-27T00:00:00"));
-  const [selectedPost, setSelectedPost] = useState<any>(null);
+  const [selectedPost, setSelectedPost] = useState<PostData | null>(null);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -349,6 +366,7 @@ export default function Bunker() {
         isOpen={!!selectedPost} 
         onClose={() => setSelectedPost(null)} 
         post={selectedPost} 
+        userId={user?.uid}
       />
     </div>
   );

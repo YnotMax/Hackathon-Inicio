@@ -62,5 +62,32 @@ service cloud.firestore {
         
       allow delete: if isSignedIn() && isValidId(memberId) && existing().userId == request.auth.uid;
     }
+
+    function isValidPost(data) {
+      return data.keys().hasAll(['postId', 'likesCount'])
+        && data.postId is string && data.postId.size() <= 128
+        && data.likesCount is number;
+    }
+
+    function isValidLike(data) {
+      return data.keys().hasAll(['userId', 'createdAt'])
+        && data.userId == request.auth.uid
+        && data.createdAt == request.time;
+    }
+
+    match /posts/{postId} {
+      allow read: if true;
+      allow create: if isSignedIn() && isValidPost(incoming());
+      allow update: if isSignedIn() 
+        && isValidPost(incoming())
+        && incoming().postId == existing().postId
+        && incoming().diff(existing()).affectedKeys().hasOnly(['likesCount', 'updatedAt']);
+    }
+
+    match /posts/{postId}/likes/{userId} {
+      allow read: if true;
+      allow create: if isSignedIn() && userId == request.auth.uid && isValidLike(incoming());
+      allow delete: if isSignedIn() && userId == request.auth.uid;
+    }
   }
 }

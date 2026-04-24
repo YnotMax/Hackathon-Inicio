@@ -1,5 +1,26 @@
 {
   "entities": {
+    "Post": {
+      "title": "Post",
+      "description": "Represents a post or update in the timeline.",
+      "type": "object",
+      "properties": {
+        "postId": { "type": "string" },
+        "likesCount": { "type": "number", "default": 0 },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["postId", "likesCount"]
+    },
+    "Like": {
+      "title": "Like",
+      "description": "Represents a user like on a post.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "createdAt"]
+    },
     "Member": {
       "title": "Member Profile",
       "description": "Represents a member of the guild and their skills.",
@@ -41,6 +62,14 @@
     "/members/{userId}": {
       "schema": { "$ref": "#/entities/Member" },
       "description": "Guild members profiles, keyed by their auth UID"
+    },
+    "/posts/{postId}": {
+      "schema": { "$ref": "#/entities/Post" },
+      "description": "Post metadata like likes count"
+    },
+    "/posts/{postId}/likes/{userId}": {
+      "schema": { "$ref": "#/entities/Like" },
+      "description": "Individual likes from users"
     }
   }
 }

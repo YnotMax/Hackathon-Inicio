@@ -1,25 +1,51 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { X, ChevronLeft, ChevronRight, Heart, MessageCircle, Send, Bookmark, MoreHorizontal } from "lucide-react";
+import { ChevronLeft, ChevronRight, Heart, MoreHorizontal, Loader2 } from "lucide-react";
+import { toggleLike, subscribeToLikes, subscribeToUserLike } from "../../services/likesService";
 
-interface Media {
+export interface Media {
   type: "image" | "video";
   url: string;
-  description: string;
+  description?: string;
+}
+
+export interface PostData {
+  id: string;
+  title: string;
+  phase: string;
+  media: Media[];
 }
 
 interface PostModalProps {
   isOpen: boolean;
   onClose: () => void;
-  post: {
-    title: string;
-    phase: string;
-    media: Media[];
-  } | null;
+  userId?: string | null;
+  post: PostData | null;
 }
 
-export function PostModal({ isOpen, onClose, post }: PostModalProps) {
+export function PostModal({ isOpen, onClose, post, userId }: PostModalProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [likesCount, setLikesCount] = useState(0);
+  const [isLiked, setIsLiked] = useState(false);
+  const [isLiking, setIsLiking] = useState(false);
+  const [isLoadingMedia, setIsLoadingMedia] = useState(true);
+  const [showHeartOverlay, setShowHeartOverlay] = useState(false);
+  
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (isOpen && post?.id) {
+        const unsubLikes = subscribeToLikes(post.id, setLikesCount);
+        let unsubUserLike = () => {};
+        if (userId) {
+          unsubUserLike = subscribeToUserLike(post.id, userId, setIsLiked);
+        }
+        return () => {
+          unsubLikes();
+          unsubUserLike();
+        };
+    }
+  }, [isOpen, post?.id, userId]);
 
   useEffect(() => {
     if (isOpen) {
@@ -27,177 +53,253 @@ export function PostModal({ isOpen, onClose, post }: PostModalProps) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "unset";
+      setIsLoadingMedia(true);
     }
     return () => {
       document.body.style.overflow = "unset";
     };
   }, [isOpen]);
 
+  const handleNext = useCallback((e?: React.MouseEvent | KeyboardEvent) => {
+    e?.stopPropagation();
+    if (!post || post.media.length <= 1) return;
+    setIsLoadingMedia(true);
+    setCurrentIndex((prev) => (prev + 1) % post.media.length);
+  }, [post]);
+
+  const handlePrev = useCallback((e?: React.MouseEvent | KeyboardEvent) => {
+    e?.stopPropagation();
+    if (!post || post.media.length <= 1) return;
+    setIsLoadingMedia(true);
+    setCurrentIndex((prev) => (prev - 1 + post.media.length) % post.media.length);
+  }, [post]);
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!isOpen) return;
+      if (e.key === 'Escape') onClose();
+      if (e.key === 'ArrowRight') handleNext();
+      if (e.key === 'ArrowLeft') handlePrev();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, handleNext, handlePrev, onClose]);
+
   if (!isOpen || !post) return null;
 
-  const handleNext = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setCurrentIndex((prev) => (prev + 1) % post.media.length);
+  const handleLike = async () => {
+    if (!userId || isLiking || !post.id) return;
+    
+    // Optimistic UI updates handled implicitly by Firebase SDK, but let's lock button
+    setIsLiking(true);
+    try {
+      await toggleLike(post.id, userId, isLiked);
+    } catch (error) {
+      console.error("Failed to toggle like:", error);
+    } finally {
+      setIsLiking(false);
+    }
   };
 
-  const handlePrev = (e: React.MouseEvent) => {
+  const handleDoubleTap = (e: React.MouseEvent) => {
     e.stopPropagation();
-    setCurrentIndex((prev) => (prev - 1 + post.media.length) % post.media.length);
+    if (!isLiked) {
+      handleLike();
+    }
+    setShowHeartOverlay(true);
+    setTimeout(() => setShowHeartOverlay(false), 800);
   };
 
-  const currentMedia = post.media[currentIndex];
+  const currentMedia = post.media?.[currentIndex];
 
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6" onClick={onClose}>
-          {/* Backdrop */}
+        <div className="fixed inset-0 z-[100] flex justify-center items-center md:p-8" onClick={onClose}>
+          {/* Backdrop with strong blur for Brutalist focus */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="absolute inset-0 bg-neo-black/80 backdrop-blur-sm"
+            transition={{ duration: 0.2 }}
+            className="absolute inset-0 bg-neo-black/90 backdrop-blur-md"
           />
 
-          {/* Modal Content - Insta Style but Neo-Brutalist */}
+          {/* Desktop Close Button outside container */}
+          <button
+             onClick={onClose}
+             className="hidden md:flex absolute top-6 right-6 p-3 text-white bg-black/50 hover:bg-neo-pink hover:text-white rounded-full transition-all z-50 border-2 border-transparent hover:border-neo-black"
+             title="Fechar (Esc)"
+          >
+             <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+          </button>
+
+          {/* Modal Container: Solid Neo-Brutalist Layout */}
           <motion.div
             onClick={(e) => e.stopPropagation()}
-            initial={{ scale: 0.95, opacity: 0, y: 20 }}
+            initial={{ scale: 0.96, opacity: 0, y: 10 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
-            exit={{ scale: 0.95, opacity: 0, y: 20 }}
-            className="relative w-full max-w-[500px] bg-white neo-border neo-shadow flex flex-col max-h-[95vh] overflow-hidden rounded-md"
+            exit={{ scale: 0.96, opacity: 0, y: 10 }}
+            transition={{ type: "spring", damping: 25, stiffness: 350 }}
+            className="relative w-full h-full md:h-[750px] md:max-h-[90vh] max-w-[500px] bg-white md:border-4 md:border-neo-black md:shadow-[12px_12px_0_0_rgba(0,0,0,1)] flex flex-col md:rounded-lg overflow-hidden"
           >
-            {/* Header (Instagram Style) */}
-            <div className="flex items-center justify-between p-3 border-b-[3px] border-neo-black bg-white">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-neo-lime border-[2px] border-neo-black overflow-hidden relative">
+            {/* Header */}
+            <header className="flex-none h-[64px] flex items-center justify-between px-4 border-b-4 border-neo-black bg-white select-none">
+              <div className="flex items-center gap-3 overflow-hidden">
+                <div className="w-10 h-10 rounded-full bg-neo-lime border-[2px] border-neo-black overflow-hidden relative flex-shrink-0">
                    <img src="https://i.pravatar.cc/100?img=11" alt="Avatar" className="w-full h-full object-cover" />
                 </div>
-                <div className="flex flex-col">
-                  <span className="font-bold font-sans text-sm tracking-tight hover:text-neo-pink cursor-pointer">
+                <div className="flex flex-col min-w-0">
+                  <span className="font-bold font-sans text-sm tracking-tight truncate">
                     equipe_alfa_bunker
                   </span>
-                  <span className="text-xs text-gray-500 font-mono">{post.phase} &bull; {post.title}</span>
+                  <span className="text-xs text-gray-500 font-mono truncate">{post.phase} &bull; {post.title}</span>
                 </div>
               </div>
-              <div className="flex items-center gap-2">
-                <button className="p-1 hover:bg-gray-100 rounded-full transition-colors">
-                  <MoreHorizontal className="w-5 h-5 text-gray-700" />
+              <div className="flex items-center flex-shrink-0 ml-2">
+                <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-full transition-colors flex md:hidden active:scale-95" title="Fechar">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
                 </button>
-                <button
-                  onClick={onClose}
-                  className="p-1 hover:bg-neo-pink hover:text-white border-2 border-transparent hover:border-neo-black transition-colors md:hidden"
-                >
-                  <X className="w-5 h-5" />
+                <button className="p-2 hover:bg-gray-100 rounded-full transition-colors hidden md:flex" title="Opções">
+                  <MoreHorizontal className="w-6 h-6 text-neo-black" />
                 </button>
               </div>
-            </div>
+            </header>
 
-            {/* Carousel Content Main */}
-            {post.media.length > 0 ? (
-              <div className="relative w-full aspect-square bg-neo-bg flex items-center justify-center overflow-hidden group border-b-[3px] border-neo-black">
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={currentIndex}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -20 }}
-                    transition={{ duration: 0.2 }}
-                    className="absolute inset-0 flex items-center justify-center bg-black"
-                  >
-                    {currentMedia.type === "image" ? (
-                      <img
-                        src={currentMedia.url}
-                        alt="Post media"
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <video
-                        src={currentMedia.url}
-                        className="w-full h-full object-cover"
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                      />
+            {/* Media Area (Flex-1 allows it to take remaining space, absolutely contained) */}
+            <main className="flex-1 relative bg-neo-black w-full min-h-0 flex items-center justify-center overflow-hidden select-none group" onDoubleClick={handleDoubleTap}>
+              {post.media?.length > 0 && currentMedia ? (
+                <>
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={currentIndex}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="absolute inset-0 w-full h-full flex items-center justify-center bg-black"
+                    >
+                      {currentMedia.type === "image" ? (
+                        <>
+                           {isLoadingMedia && (
+                             <div className="absolute inset-0 flex items-center justify-center text-white/50">
+                               <Loader2 className="w-8 h-8 animate-spin" />
+                             </div>
+                           )}
+                           <img
+                             src={currentMedia.url}
+                             alt="Post media"
+                             className={`w-full h-full object-contain transition-opacity duration-300 ${isLoadingMedia ? 'opacity-0' : 'opacity-100'}`}
+                             onLoad={() => setIsLoadingMedia(false)}
+                           />
+                        </>
+                      ) : (
+                        <video
+                          ref={videoRef}
+                          src={currentMedia.url}
+                          className="w-full h-full object-contain"
+                          autoPlay
+                          loop
+                          muted
+                          playsInline
+                          controls
+                          onLoadedData={() => setIsLoadingMedia(false)}
+                        />
+                      )}
+                    </motion.div>
+                  </AnimatePresence>
+
+                  {/* Double Tap Heart Overlay */}
+                  <AnimatePresence>
+                    {showHeartOverlay && (
+                      <motion.div 
+                        initial={{ scale: 0.5, opacity: 0 }}
+                        animate={{ scale: 1.5, opacity: 1 }}
+                        exit={{ scale: 2, opacity: 0 }}
+                        transition={{ type: "spring", damping: 15 }}
+                        className="absolute z-20 pointer-events-none drop-shadow-2xl"
+                      >
+                        <Heart className="w-24 h-24 text-neo-pink fill-neo-pink" />
+                      </motion.div>
                     )}
-                  </motion.div>
-                </AnimatePresence>
+                  </AnimatePresence>
 
-                {/* Navigation Buttons */}
-                {post.media.length > 1 && (
-                  <>
-                    <button
-                      onClick={handlePrev}
-                      className="absolute left-2 p-1.5 bg-white/80 hover:bg-white text-black rounded-full shadow-lg transition-all opacity-0 group-hover:opacity-100"
-                    >
-                      <ChevronLeft className="w-5 h-5" />
-                    </button>
-                    <button
-                      onClick={handleNext}
-                      className="absolute right-2 p-1.5 bg-white/80 hover:bg-white text-black rounded-full shadow-lg transition-all opacity-0 group-hover:opacity-100"
-                    >
-                      <ChevronRight className="w-5 h-5" />
-                    </button>
-                  </>
-                )}
-              </div>
-            ) : (
-              <div className="w-full aspect-square flex items-center justify-center bg-gray-100 text-gray-500 font-mono border-b-[3px] border-neo-black">
-                [ SEM MÍDIA DISPONÍVEL ]
-              </div>
-            )}
-
-            {/* Action Bar */}
-            <div className="p-3 bg-white">
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center gap-4">
-                  <button className="hover:opacity-50 transition-opacity"><Heart className="w-7 h-7" /></button>
-                  <button className="hover:opacity-50 transition-opacity"><MessageCircle className="w-7 h-7" /></button>
-                  <button className="hover:opacity-50 transition-opacity"><Send className="w-7 h-7" /></button>
-                </div>
-                <button className="hover:opacity-50 transition-opacity"><Bookmark className="w-7 h-7" /></button>
-              </div>
-
-              {/* Indicators / Pagination dots (centered under actions) */}
-              {post.media.length > 1 && (
-                <div className="flex justify-center gap-1.5 mb-3">
-                  {post.media.map((_, idx) => (
-                    <div
-                      key={idx}
-                      className={`h-1.5 rounded-full transition-all ${
-                        idx === currentIndex ? "w-1.5 bg-neo-black" : "w-1.5 bg-gray-300"
-                      }`}
-                    />
-                  ))}
+                  {/* Navigation Overlays */}
+                  {post.media.length > 1 && (
+                    <>
+                      <button
+                        onClick={handlePrev}
+                        className="absolute left-3 top-1/2 -translate-y-1/2 p-2.5 bg-white/90 hover:bg-white border-2 border-transparent hover:border-neo-black text-black rounded-full shadow-lg transition-all opacity-0 group-hover:opacity-100 focus:opacity-100 custom-focus z-10 active:scale-90"
+                        aria-label="Anterior"
+                      >
+                        <ChevronLeft className="w-6 h-6 stroke-[3px]" />
+                      </button>
+                      <button
+                        onClick={handleNext}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 p-2.5 bg-white/90 hover:bg-white border-2 border-transparent hover:border-neo-black text-black rounded-full shadow-lg transition-all opacity-0 group-hover:opacity-100 focus:opacity-100 custom-focus z-10 active:scale-90"
+                        aria-label="Próximo"
+                      >
+                        <ChevronRight className="w-6 h-6 stroke-[3px]" />
+                      </button>
+                    </>
+                  )}
+                </>
+              ) : (
+                <div className="flex flex-col items-center justify-center text-gray-500 font-mono text-sm uppercase gap-2">
+                  <div className="w-12 h-12 border-4 border-gray-500 rounded-sm flex items-center justify-center">?</div>
+                  <span>[ MÍDIA CORROMPIDA ]</span>
                 </div>
               )}
+            </main>
 
-              {/* Likes Text */}
-              <div className="font-bold text-sm tracking-tight mb-2">
-                1.337 curtidas
-              </div>
+            {/* Footer Area */}
+            <footer className="flex-none bg-white border-t-4 border-neo-black w-full overflow-y-auto max-h-[35vh]">
+              <div className="p-4">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-4">
+                    <button 
+                      onClick={handleLike}
+                      disabled={!userId || isLiking}
+                      className={`group flex items-center justify-center transition-transform active:scale-90 ${isLiked ? 'text-neo-pink' : 'text-neo-black hover:text-gray-600'}`}
+                      aria-label={isLiked ? "Descurtir" : "Curtir"}
+                    >
+                      <Heart className={`w-8 h-8 transition-colors ${isLiked ? 'fill-current' : 'fill-transparent group-hover:fill-gray-100'}`} />
+                    </button>
+                  </div>
+                  
+                  {/* Pagination dots aligned to right/center */}
+                  {post.media && post.media.length > 1 && (
+                    <div className="flex justify-center gap-1.5 flex-1">
+                      {post.media.map((_, idx) => (
+                        <div
+                          key={idx}
+                          className={`h-1.5 rounded-full transition-all duration-300 ${
+                            idx === currentIndex ? "w-3 bg-neo-pink" : "w-1.5 bg-gray-300"
+                          }`}
+                        />
+                      ))}
+                    </div>
+                  )}
+                  <div className="w-8" />{/* Spacer to balance flex wrapper */}
+                </div>
 
-              {/* Description */}
-              <div className="text-sm border-l-2 border-neo-pink pl-2 mb-2 max-h-32 overflow-y-auto">
-                <span className="font-bold mr-2">equipe_alfa_bunker</span>
-                <span>
-                  {currentMedia?.description || "Registro do sistema atualizado."}
-                </span>
-              </div>
-              
-              <div className="text-xs text-gray-400 mt-2 uppercase font-mono tracking-wider">
-                HÁ 42 MINUTOS
-              </div>
-            </div>
+                <div className="font-bold text-sm tracking-tight mb-2">
+                  {likesCount.toLocaleString()} {likesCount === 1 ? 'curtida' : 'curtidas'}
+                </div>
 
-            {/* Close button for desktop (outside the frame) */}
-            <button
-               onClick={onClose}
-               className="hidden md:flex absolute -right-12 top-0 p-2 text-white hover:text-neo-pink transition-colors"
-            >
-               <X className="w-8 h-8" />
-            </button>
+                <div className="text-sm border-l-4 border-neo-pink pl-3 mb-2">
+                  <span className="font-black mr-2 font-mono">equipe_alfa_bunker</span>
+                  <span className="text-gray-800 leading-relaxed text-[13px]">
+                    {currentMedia?.description || "Registro codificado salvo nos arquivos do sistema."}
+                  </span>
+                </div>
+                
+                <div className="text-[10px] text-gray-400 mt-3 uppercase font-mono tracking-widest font-bold">
+                  HÁ 42 MINUTOS
+                </div>
+              </div>
+            </footer>
           </motion.div>
         </div>
       )}

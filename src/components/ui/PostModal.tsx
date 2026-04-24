@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "motion/react";
 import { ChevronLeft, ChevronRight, Heart, MoreHorizontal, Loader2 } from "lucide-react";
 import { toggleLike, subscribeToLikes, subscribeToUserLike } from "../../services/likesService";
@@ -113,7 +114,7 @@ export function PostModal({ isOpen, onClose, post, userId }: PostModalProps) {
 
   const currentMedia = post.media?.[currentIndex];
 
-  return (
+  return createPortal(
     <AnimatePresence>
       {isOpen && (
         <div className="fixed inset-0 z-[100] flex justify-center items-center md:p-8" onClick={onClose}>
@@ -303,6 +304,7 @@ export function PostModal({ isOpen, onClose, post, userId }: PostModalProps) {
           </motion.div>
         </div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 }

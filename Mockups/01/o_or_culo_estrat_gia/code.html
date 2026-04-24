@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+
+<html class="light" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>O Oráculo - Painel do Dia D</title>
+<!-- Google Fonts: Space Grotesk & Inter -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&amp;family=Space+Grotesk:wght@600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+        }
+    </style>
+<!-- Tailwind CSS with custom config -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-container-high": "#e8e8e8",
+                        "on-tertiary": "#ffffff",
+                        "inverse-on-surface": "#f1f1f1",
+                        "on-background": "#1b1b1b",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed-variant": "#474747",
+                        "on-primary-fixed-variant": "#474747",
+                        "secondary-container": "#fdc800",
+                        "background": "#f9f9f9",
+                        "primary-fixed-dim": "#c6c6c6",
+                        "surface-container-highest": "#e2e2e2",
+                        "on-surface-variant": "#4c4546",
+                        "border-primary": "#000000",
+                        "on-secondary-container": "#6d5500",
+                        "on-primary-fixed": "#1b1b1b",
+                        "primary-container": "#1b1b1b",
+                        "on-primary-container": "#848484",
+                        "on-secondary": "#ffffff",
+                        "surface-dim": "#dadada",
+                        "tertiary-container": "#1b1b1b",
+                        "on-tertiary-fixed": "#1b1b1b",
+                        "accent-pink": "#FF2E93",
+                        "primary": "#000000",
+                        "surface": "#f9f9f9",
+                        "tertiary": "#000000",
+                        "accent-cyan": "#00E5FF",
+                        "background-alt": "#E5E5E5",
+                        "surface-container": "#eeeeee",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "secondary": "#755b00",
+                        "surface-container-low": "#f3f3f3",
+                        "on-secondary-fixed-variant": "#584400",
+                        "on-error": "#ffffff",
+                        "background-main": "#F4F4F0",
+                        "secondary-fixed": "#ffdf91",
+                        "surface-tint": "#5e5e5e",
+                        "outline": "#7e7576",
+                        "on-secondary-fixed": "#241a00",
+                        "secondary-fixed-dim": "#f3c000",
+                        "tertiary-fixed-dim": "#c6c6c6",
+                        "on-error-container": "#93000a",
+                        "inverse-primary": "#c6c6c6",
+                        "surface-variant": "#e2e2e2",
+                        "inverse-surface": "#303030",
+                        "on-tertiary-container": "#848484",
+                        "on-surface": "#1b1b1b",
+                        "outline-variant": "#cfc4c5",
+                        "accent-yellow": "#FFC900",
+                        "surface-bright": "#f9f9f9",
+                        "primary-fixed": "#e2e2e2",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed": "#e2e2e2",
+                        "accent-lime": "#B8FF29"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "margin": "32px",
+                        "gutter": "24px",
+                        "unit": "4px",
+                        "card-padding": "24px",
+                        "border-width": "3px"
+                    },
+                    fontFamily: {
+                        "label": ["Space Grotesk"],
+                        "body-bold": ["Inter"],
+                        "h2": ["Space Grotesk"],
+                        "h3": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "h1": ["Space Grotesk"]
+                    },
+                    fontSize: {
+                        "label": ["14px", { "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "body-bold": ["16px", { "lineHeight": "1.6", "fontWeight": "700" }],
+                        "h2": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.03em", "fontWeight": "800" }],
+                        "h3": ["24px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "body": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "h1": ["96px", { "lineHeight": "1.0", "letterSpacing": "-0.05em", "fontWeight": "800" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-primary font-body antialiased selection:bg-accent-pink selection:text-white min-h-screen flex flex-col lg:flex-row overflow-x-hidden">
+<!-- JSON Component: SideNavBar (Desktop Shell) -->
+<aside class="bg-white dark:bg-zinc-900 text-black dark:text-white font-['Space_Grotesk'] font-bold uppercase h-screen w-72 border-r-4 border-black fixed left-0 top-0 hidden lg:flex flex-col flex flex-col p-4 gap-2 z-[60] shadow-[8px_0px_0px_0px_rgba(0,0,0,1)]">
+<div class="mb-6 border-b-4 border-black pb-4">
+<div class="text-xl font-black text-black dark:text-white mb-2 tracking-tighter">COMANDO_CENTRAL</div>
+<div class="text-[10px] text-zinc-500 font-bold tracking-widest uppercase">STATUS: OPERACIONAL</div>
+</div>
+<nav class="flex-1 flex flex-col gap-2">
+<!-- Active Nav Item -->
+<a class="bg-pink-400 dark:bg-pink-500 border-4 border-black translate-x-[4px] translate-y-[4px] shadow-none py-3 px-4 mx-2 my-1 flex items-center gap-4 text-black active:translate-x-[4px] active:translate-y-[4px] transition-transform" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+                DASHBOARD
+            </a>
+<a class="border-2 border-transparent py-3 px-4 mx-2 my-1 flex items-center gap-4 text-black dark:text-zinc-300 hover:border-black hover:bg-zinc-50 dark:hover:bg-zinc-800 active:translate-x-[4px] active:translate-y-[4px] transition-transform" href="#">
+<span class="material-symbols-outlined">group</span>
+                MEMBROS
+            </a>
+<a class="border-2 border-transparent py-3 px-4 mx-2 my-1 flex items-center gap-4 text-black dark:text-zinc-300 hover:border-black hover:bg-zinc-50 dark:hover:bg-zinc-800 active:translate-x-[4px] active:translate-y-[4px] transition-transform" href="#">
+<span class="material-symbols-outlined">account_tree</span>
+                PROJETOS
+            </a>
+<a class="border-2 border-transparent py-3 px-4 mx-2 my-1 flex items-center gap-4 text-black dark:text-zinc-300 hover:border-black hover:bg-zinc-50 dark:hover:bg-zinc-800 active:translate-x-[4px] active:translate-y-[4px] transition-transform" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+                LOGS
+            </a>
+<a class="border-2 border-transparent py-3 px-4 mx-2 my-1 flex items-center gap-4 text-black dark:text-zinc-300 hover:border-black hover:bg-zinc-50 dark:hover:bg-zinc-800 active:translate-x-[4px] active:translate-y-[4px] transition-transform" href="#">
+<span class="material-symbols-outlined">settings</span>
+                CONFIG
+            </a>
+</nav>
+<button class="w-full bg-yellow-400 border-4 border-black py-4 mt-4 font-black uppercase text-black hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all active:translate-x-[4px] active:translate-y-[4px] active:shadow-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+            NOVA_MISSÃO
+        </button>
+<div class="mt-4 border-t-4 border-black pt-4 flex flex-col gap-2">
+<a class="border-2 border-transparent py-2 px-4 mx-2 flex items-center gap-4 text-black dark:text-zinc-300 hover:border-black hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-transform" href="#">
+<span class="material-symbols-outlined">help</span>
+                SUPORTE
+            </a>
+<a class="border-2 border-transparent py-2 px-4 mx-2 flex items-center gap-4 text-black dark:text-zinc-300 hover:border-black hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-transform" href="#">
+<span class="material-symbols-outlined">logout</span>
+                SAIR
+            </a>
+</div>
+</aside>
+<!-- Main Content Wrapper -->
+<div class="flex-1 flex flex-col lg:ml-72 min-h-screen relative">
+<!-- JSON Component: TopAppBar (Web Header) -->
+<header class="bg-white dark:bg-zinc-900 text-black dark:text-white font-['Space_Grotesk'] font-bold uppercase tracking-tighter w-full border-b-4 border-black sticky top-0 z-50 shadow-none flex justify-between items-center h-20 px-8 w-full hidden md:flex">
+<div class="text-2xl font-black italic bg-yellow-400 dark:bg-yellow-500 px-3 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-black">
+                GUILDA_CMD
+            </div>
+<nav class="flex items-center gap-4">
+<!-- Active Top Nav -->
+<a class="border-b-4 border-black bg-lime-400 dark:bg-lime-500 text-black px-2 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all active:translate-x-[4px] active:translate-y-[4px] active:shadow-none" href="#">
+                    MISSÕES
+                </a>
+<a class="text-black dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 px-2 py-1 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all active:translate-x-[4px] active:translate-y-[4px] active:shadow-none" href="#">
+                    EQUIPES
+                </a>
+<a class="text-black dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 px-2 py-1 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all active:translate-x-[4px] active:translate-y-[4px] active:shadow-none" href="#">
+                    RANKING
+                </a>
+<a class="text-black dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 px-2 py-1 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all active:translate-x-[4px] active:translate-y-[4px] active:shadow-none" href="#">
+                    ARSENAL
+                </a>
+</nav>
+<div class="flex items-center gap-6">
+<button class="hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all active:translate-x-[4px] active:translate-y-[4px] active:shadow-none">
+<span class="material-symbols-outlined text-3xl">terminal</span>
+</button>
+<button class="hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all active:translate-x-[4px] active:translate-y-[4px] active:shadow-none relative">
+<span class="material-symbols-outlined text-3xl">notifications</span>
+<span class="absolute top-0 right-0 w-3 h-3 bg-red-500 border-2 border-black rounded-full"></span>
+</button>
+<div class="w-10 h-10 border-2 border-black bg-zinc-200 overflow-hidden shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+<img alt="Avatar do Comandante" class="w-full h-full object-cover" data-alt="close up portrait of a serious male software engineer in a dark tech bunker environment" src="https://lh3.googleusercontent.com/aida-public/AB6AXuChmqw_QKpoycxpILSBSk6L40cEVRGlD5Vl8ecrh3JQ8WlveJr4n82sx0LKWnMOeq_97F9cWl3UKTkfeFP3iYMqTDQva6A9ZjRFMpy5AycTqPbHmnx2lmn32KgIFQ2pL7lr6ef4RsjCJ8yRqg61vIYJsX2UMk09ivRwmyJocRWLpwZV0x4qMfyj_Jp2dEFXcITQTmE4LEKv2R23UOGUz0wjx-2zC1vLFE3ZrUqoqZQo1-zLnhZHvA4h0fbx2GTWk4KQawf1uVsYxrs"/>
+</div>
+</div>
+</header>
+<!-- Canvas Area -->
+<main class="flex-1 p-4 md:p-margin pb-32 lg:pb-margin flex flex-col gap-margin max-w-[1600px] mx-auto w-full">
+<!-- Header Section -->
+<section class="flex flex-col gap-4 items-start border-b-[4px] border-border-primary pb-8">
+<div class="inline-block bg-accent-yellow border-[4px] border-border-primary px-6 py-2 shadow-[8px_8px_0px_0px_#000000] -rotate-1 hover:rotate-0 transition-transform">
+<h1 class="font-h1 text-h1 text-primary uppercase leading-none">O Oráculo</h1>
+</div>
+<h2 class="font-h3 text-h3 text-on-surface uppercase bg-primary text-on-primary px-4 py-1 mt-4 inline-block">Painel do Dia D // Operação Tática</h2>
+</section>
+<!-- Giant Text Field Section -->
+<section class="flex flex-col gap-4">
+<label class="font-label text-label text-primary uppercase flex items-center gap-2" for="mission-data">
+<span class="material-symbols-outlined text-accent-pink" style="font-variation-settings: 'FILL' 1;">target</span>
+                    Alimentar o Núcleo (Cole os desafios aqui)
+                </label>
+<div class="relative w-full group">
+<div class="absolute inset-0 bg-accent-cyan translate-x-[8px] translate-y-[8px] border-[4px] border-border-primary"></div>
+<textarea class="relative w-full h-64 bg-surface p-6 font-body text-body text-primary border-[4px] border-border-primary resize-none outline-none focus:border-accent-pink transition-colors z-10 block shadow-none" id="mission-data" placeholder="Ex: Necessidade de migrar 50 microserviços para Kubernetes em 48 horas com zero downtime. Equipe desfalcada. Orçamento restrito."></textarea>
+</div>
+</section>
+<!-- Colossal Action Button -->
+<section class="py-8">
+<button class="w-full relative group cursor-pointer block">
+<div class="absolute inset-0 bg-primary translate-x-[12px] translate-y-[12px] group-hover:translate-x-[8px] group-hover:translate-y-[8px] group-active:translate-x-[0px] group-active:translate-y-[0px] transition-all border-[4px] border-primary"></div>
+<div class="relative bg-accent-pink border-[4px] border-border-primary py-10 px-8 flex items-center justify-center gap-6 group-hover:bg-pink-500 transition-colors group-active:translate-x-[12px] group-active:translate-y-[12px] z-10">
+<span class="material-symbols-outlined text-[64px] text-primary" style="font-variation-settings: 'FILL' 1;">bolt</span>
+<span class="font-h2 text-[32px] md:text-h2 text-primary uppercase text-center leading-none">Cruzar Dados &amp; Gerar Estratégia</span>
+<span class="material-symbols-outlined text-[64px] text-primary" style="font-variation-settings: 'FILL' 1;">analytics</span>
+</div>
+</button>
+</section>
+<!-- 3 Bento Cards Grid (Results) -->
+<section class="grid grid-cols-1 xl:grid-cols-3 gap-gutter mt-8">
+<!-- Card 1: Escolha Segura -->
+<article class="bg-accent-lime border-[4px] border-border-primary p-card-padding flex flex-col gap-6 shadow-[8px_8px_0px_0px_#000000] hover:-translate-y-2 hover:shadow-[12px_12px_0px_0px_#000000] transition-all group">
+<header class="flex justify-between items-start border-b-[4px] border-primary pb-4">
+<div>
+<span class="font-label text-label uppercase bg-primary text-on-primary px-2 py-1 inline-block mb-2">Opção Alpha</span>
+<h3 class="font-h3 text-h3 text-primary uppercase">Escolha Segura</h3>
+</div>
+<span class="material-symbols-outlined text-[48px] text-primary" style="font-variation-settings: 'FILL' 1;">verified</span>
+</header>
+<div class="flex items-baseline gap-2">
+<span class="font-h1 text-[80px] text-primary leading-none tracking-tighter">94</span>
+<span class="font-h2 text-h2 text-primary">%</span>
+<span class="font-label text-label uppercase ml-2 block">Match<br/>Score</span>
+</div>
+<div class="flex-1 flex flex-col gap-4 mt-4">
+<div class="bg-white border-[3px] border-primary p-4">
+<h4 class="font-label text-label uppercase border-b-[2px] border-primary pb-2 mb-2">Alocação de Tarefas</h4>
+<ul class="font-body text-body flex flex-col gap-2">
+<li class="flex items-center gap-2"><span class="w-2 h-2 bg-primary"></span> Migração em Fases (10/dia)</li>
+<li class="flex items-center gap-2"><span class="w-2 h-2 bg-primary"></span> Redundância DNS Ativa</li>
+<li class="flex items-center gap-2"><span class="w-2 h-2 bg-primary"></span> Script de Rollback Automático</li>
+</ul>
+</div>
+<div class="bg-primary text-on-primary border-[3px] border-primary p-4 flex gap-4 items-start mt-auto">
+<span class="material-symbols-outlined text-accent-lime">warning</span>
+<div>
+<h4 class="font-label text-label uppercase text-accent-lime">Risco Mapeado: Baixo</h4>
+<p class="font-body text-sm mt-1">Atraso na entrega final devido a validações rigorosas.</p>
+</div>
+</div>
+</div>
+</article>
+<!-- Card 2: Risco -->
+<article class="bg-accent-yellow border-[4px] border-border-primary p-card-padding flex flex-col gap-6 shadow-[8px_8px_0px_0px_#000000] hover:-translate-y-2 hover:shadow-[12px_12px_0px_0px_#000000] transition-all group lg:scale-[1.02] lg:-rotate-1 relative z-10">
+<header class="flex justify-between items-start border-b-[4px] border-primary pb-4">
+<div>
+<span class="font-label text-label uppercase bg-primary text-on-primary px-2 py-1 inline-block mb-2 text-accent-yellow">Opção Bravo</span>
+<h3 class="font-h3 text-h3 text-primary uppercase">Alto Risco</h3>
+</div>
+<span class="material-symbols-outlined text-[48px] text-primary" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+</header>
+<div class="flex items-baseline gap-2">
+<span class="font-h1 text-[80px] text-primary leading-none tracking-tighter">68</span>
+<span class="font-h2 text-h2 text-primary">%</span>
+<span class="font-label text-label uppercase ml-2 block">Match<br/>Score</span>
+</div>
+<div class="flex-1 flex flex-col gap-4 mt-4">
+<div class="bg-white border-[3px] border-primary p-4">
+<h4 class="font-label text-label uppercase border-b-[2px] border-primary pb-2 mb-2">Alocação de Tarefas</h4>
+<ul class="font-body text-body flex flex-col gap-2">
+<li class="flex items-center gap-2"><span class="w-2 h-2 bg-primary"></span> Big Bang Deploy (Sexta 23h)</li>
+<li class="flex items-center gap-2"><span class="w-2 h-2 bg-primary"></span> Bypass de QA Secundário</li>
+<li class="flex items-center gap-2"><span class="w-2 h-2 bg-primary"></span> Escalar DB ao Máximo</li>
+</ul>
+</div>
+<div class="bg-primary text-on-primary border-[3px] border-primary p-4 flex gap-4 items-start mt-auto">
+<span class="material-symbols-outlined text-accent-pink">skull</span>
+<div>
+<h4 class="font-label text-label uppercase text-accent-pink">Risco Mapeado: Crítico</h4>
+<p class="font-body text-sm mt-1">Downtime prolongado se o script de automação falhar na camada de rede.</p>
+</div>
+</div>
+</div>
+</article>
+<!-- Card 3: Surpresa -->
+<article class="bg-accent-cyan border-[4px] border-border-primary p-card-padding flex flex-col gap-6 shadow-[8px_8px_0px_0px_#000000] hover:-translate-y-2 hover:shadow-[12px_12px_0px_0px_#000000] transition-all group">
+<header class="flex justify-between items-start border-b-[4px] border-primary pb-4">
+<div>
+<span class="font-label text-label uppercase bg-primary text-on-primary px-2 py-1 inline-block mb-2">Opção Charlie</span>
+<h3 class="font-h3 text-h3 text-primary uppercase">Surpresa</h3>
+</div>
+<span class="material-symbols-outlined text-[48px] text-primary" style="font-variation-settings: 'FILL' 1;">casino</span>
+</header>
+<div class="flex items-baseline gap-2">
+<span class="font-h1 text-[80px] text-primary leading-none tracking-tighter">81</span>
+<span class="font-h2 text-h2 text-primary">%</span>
+<span class="font-label text-label uppercase ml-2 block">Match<br/>Score</span>
+</div>
+<div class="flex-1 flex flex-col gap-4 mt-4">
+<div class="bg-white border-[3px] border-primary p-4">
+<h4 class="font-label text-label uppercase border-b-[2px] border-primary pb-2 mb-2">Alocação de Tarefas</h4>
+<ul class="font-body text-body flex flex-col gap-2">
+<li class="flex items-center gap-2"><span class="w-2 h-2 bg-primary"></span> Delegar p/ IA Generativa</li>
+<li class="flex items-center gap-2"><span class="w-2 h-2 bg-primary"></span> Arquitetura Serverless</li>
+<li class="flex items-center gap-2"><span class="w-2 h-2 bg-primary"></span> Gamificar a migração</li>
+</ul>
+</div>
+<div class="bg-primary text-on-primary border-[3px] border-primary p-4 flex gap-4 items-start mt-auto">
+<span class="material-symbols-outlined text-accent-cyan">help</span>
+<div>
+<h4 class="font-label text-label uppercase text-accent-cyan">Risco Mapeado: Variável</h4>
+<p class="font-body text-sm mt-1">Custo imprevisível na nuvem e curva de aprendizado íngreme.</p>
+</div>
+</div>
+</div>
+</article>
+</section>
+</main>
+</div>
+<!-- JSON Component: BottomNavBar (Mobile Shell) -->
+<nav class="bg-white dark:bg-zinc-900 text-black dark:text-white font-['Space_Grotesk'] text-[10px] font-black uppercase fixed bottom-0 w-full h-20 border-t-4 border-black lg:hidden z-50 shadow-[0_-4px_0px_0px_rgba(0,0,0,1)] fixed bottom-0 left-0 w-full flex justify-around items-center">
+<!-- Active Nav -->
+<a class="flex flex-col items-center justify-center bg-cyan-400 dark:bg-cyan-500 border-2 border-black h-full w-full active:translate-y-[2px]" href="#">
+<span class="material-symbols-outlined text-2xl mb-1" style="font-variation-settings: 'FILL' 1;">home</span>
+            HOME
+        </a>
+<a class="flex flex-col items-center justify-center h-full w-full text-black dark:text-zinc-400 hover:bg-cyan-100 dark:hover:bg-zinc-800 active:translate-y-[2px]" href="#">
+<span class="material-symbols-outlined text-2xl mb-1">bolt</span>
+            SQUAD
+        </a>
+<a class="flex flex-col items-center justify-center h-full w-full text-black dark:text-zinc-400 hover:bg-cyan-100 dark:hover:bg-zinc-800 active:translate-y-[2px]" href="#">
+<span class="material-symbols-outlined text-2xl mb-1">code</span>
+            CODE
+        </a>
+<a class="flex flex-col items-center justify-center h-full w-full text-black dark:text-zinc-400 hover:bg-cyan-100 dark:hover:bg-zinc-800 active:translate-y-[2px]" href="#">
+<span class="material-symbols-outlined text-2xl mb-1">person</span>
+            PERFIL
+        </a>
+</nav>
+</body></html>

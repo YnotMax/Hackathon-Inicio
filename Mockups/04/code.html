@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GUILDA QG - Roster</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&amp;family=Space+Grotesk:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-dim": "#dadada",
+                      "primary-container": "#1b1b1b",
+                      "inverse-on-surface": "#f1f1f1",
+                      "on-primary-container": "#848484",
+                      "on-secondary-fixed": "#241a00",
+                      "on-primary": "#ffffff",
+                      "surface-container": "#eeeeee",
+                      "on-error": "#ffffff",
+                      "tertiary-container": "#1b1b1b",
+                      "on-secondary": "#ffffff",
+                      "on-surface-variant": "#4c4546",
+                      "surface-tint": "#5e5e5e",
+                      "accent-cyan": "#00E5FF",
+                      "inverse-surface": "#303030",
+                      "surface-bright": "#f9f9f9",
+                      "surface": "#f9f9f9",
+                      "surface-container-highest": "#e2e2e2",
+                      "secondary-fixed-dim": "#f3c000",
+                      "on-primary-fixed-variant": "#474747",
+                      "on-primary-fixed": "#1b1b1b",
+                      "outline-variant": "#cfc4c5",
+                      "on-tertiary-fixed": "#1b1b1b",
+                      "on-background": "#1b1b1b",
+                      "on-tertiary-fixed-variant": "#474747",
+                      "background-main": "#F4F4F0",
+                      "inverse-primary": "#c6c6c6",
+                      "secondary": "#755b00",
+                      "on-surface": "#1b1b1b",
+                      "on-error-container": "#93000a",
+                      "surface-container-high": "#e8e8e8",
+                      "border-primary": "#000000",
+                      "primary": "#000000",
+                      "tertiary-fixed-dim": "#c6c6c6",
+                      "error": "#ba1a1a",
+                      "background": "#f9f9f9",
+                      "on-tertiary": "#ffffff",
+                      "tertiary": "#000000",
+                      "on-tertiary-container": "#848484",
+                      "primary-fixed": "#e2e2e2",
+                      "accent-yellow": "#FFC900",
+                      "outline": "#7e7576",
+                      "primary-fixed-dim": "#c6c6c6",
+                      "on-secondary-fixed-variant": "#584400",
+                      "accent-lime": "#B8FF29",
+                      "error-container": "#ffdad6",
+                      "tertiary-fixed": "#e2e2e2",
+                      "surface-container-low": "#f3f3f3",
+                      "surface-variant": "#e2e2e2",
+                      "secondary-fixed": "#ffdf91",
+                      "secondary-container": "#fdc800",
+                      "on-secondary-container": "#6d5500",
+                      "accent-pink": "#FF2E93",
+                      "surface-container-lowest": "#ffffff",
+                      "background-alt": "#E5E5E5"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "card-padding": "24px",
+                      "margin": "32px",
+                      "gutter": "24px",
+                      "unit": "4px",
+                      "border-width": "3px"
+              },
+              "fontFamily": {
+                      "body-bold": ["Inter"],
+                      "h2": ["Space Grotesk"],
+                      "label": ["Space Grotesk"],
+                      "body": ["Inter"],
+                      "h3": ["Space Grotesk"],
+                      "h1": ["Space Grotesk"]
+              },
+              "fontSize": {
+                      "body-bold": ["16px", {"lineHeight": "1.6", "fontWeight": "700"}],
+                      "h2": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.03em", "fontWeight": "800"}],
+                      "label": ["14px", {"letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "body": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "h3": ["24px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                      "h1": ["96px", {"lineHeight": "1.0", "letterSpacing": "-0.05em", "fontWeight": "800"}]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+          font-variation-settings: 'FILL' 1, 'wght' 700, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Hardcore Neo-Brutalist utilities not natively in spacing/borders */
+        .brutal-border { border-width: 4px; border-color: #000; border-style: solid; }
+        .brutal-shadow { box-shadow: 8px 8px 0px 0px #000000; }
+        .brutal-shadow-sm { box-shadow: 4px 4px 0px 0px #000000; }
+        .brutal-shadow-hover:hover { box-shadow: 12px 12px 0px 0px #000000; transform: translate(-4px, -4px); }
+        .brutal-active:active { box-shadow: 0px 0px 0px 0px #000000 !important; transform: translate(8px, 8px) !important; }
+        
+        /* Custom scrollbar for horizontal deck */
+        .deck-scroll::-webkit-scrollbar { height: 16px; }
+        .deck-scroll::-webkit-scrollbar-track { background: #f3f3f3; border-top: 4px solid #000; }
+        .deck-scroll::-webkit-scrollbar-thumb { background: #FFC900; border: 4px solid #000; border-top: none; }
+    </style>
+</head>
+<body class="bg-background-main text-on-background font-body text-body min-h-screen flex overflow-hidden selection:bg-accent-pink selection:text-white">
+<!-- JSON Component: SideNavBar -->
+<aside class="hidden md:flex flex-col w-64 bg-surface-container-lowest brutal-border brutal-shadow z-40 relative flex-shrink-0">
+<!-- Header -->
+<div class="p-6 border-b-4 border-primary flex flex-col items-center justify-center bg-accent-yellow">
+<div class="w-20 h-20 brutal-border bg-surface-dim mb-4 overflow-hidden brutal-shadow-sm">
+<img alt="Guild Commander Avatar" class="w-full h-full object-cover grayscale contrast-150" data-alt="pixelated or high contrast cyberpunk style portrait of a male commander with a serious expression" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBA4U-5xzLrdw6I690e8G_3xJrcTV-uLm3v6T2gP04grGb8IGky9OLqDxkMc5u3oSvpPJSd0XCrJisx3_SidJ9b_CEtVCHcmNZtXC8VtioKcY3PzfROGPR3AW2bbko6khxuXTsrpeYy_8ucpfLUd1UJCIvH3XC6GwNJ4451vllOqPWgExWpSBKhTvqGHgcZfSeziu5Kl_VHsLNZPYITWw9EjHAU9pPWcKRy1qSeG5rnijy465Hdsqx8DIGVEQR5FHCoS7JKEKgu8FM"/>
+</div>
+<h1 class="font-h3 text-h3 text-primary uppercase text-center tracking-tighter">GUILDA HQ</h1>
+<p class="font-label text-label text-primary mt-1 px-2 py-1 bg-surface-container-lowest brutal-border text-xs">SYSTEM: ONLINE</p>
+</div>
+<!-- Navigation -->
+<nav class="flex-1 overflow-y-auto py-4 flex flex-col gap-2 px-2">
+<!-- Inactive -->
+<a class="flex items-center gap-4 p-4 text-primary font-label text-label uppercase opacity-80 hover:opacity-100 hover:bg-surface-container transition-all" href="#">
+<span class="material-symbols-outlined text-2xl">terminal</span>
+                HQ
+            </a>
+<!-- Active (GUILD selected for character decks) -->
+<a class="flex items-center gap-4 p-4 bg-accent-yellow text-primary brutal-border brutal-shadow-sm font-label text-label uppercase m-2 brutal-active" href="#">
+<span class="material-symbols-outlined text-2xl">groups</span>
+                GUILD
+            </a>
+<!-- Inactive -->
+<a class="flex items-center gap-4 p-4 text-primary font-label text-label uppercase opacity-80 hover:opacity-100 hover:bg-surface-container transition-all" href="#">
+<span class="material-symbols-outlined text-2xl">shield</span>
+                ARMORY
+            </a>
+<a class="flex items-center gap-4 p-4 text-primary font-label text-label uppercase opacity-80 hover:opacity-100 hover:bg-surface-container transition-all" href="#">
+<span class="material-symbols-outlined text-2xl">history</span>
+                LOGS
+            </a>
+<a class="flex items-center gap-4 p-4 text-primary font-label text-label uppercase opacity-80 hover:opacity-100 hover:bg-surface-container transition-all" href="#">
+<span class="material-symbols-outlined text-2xl">settings</span>
+                SETTINGS
+            </a>
+</nav>
+<!-- CTA -->
+<div class="p-4 border-t-4 border-primary bg-surface-container-lowest">
+<button class="w-full py-4 bg-primary text-on-primary font-label text-label uppercase tracking-widest brutal-border brutal-shadow-sm hover:bg-accent-cyan hover:text-primary transition-colors brutal-active">
+                READ MY FATE
+            </button>
+</div>
+</aside>
+<!-- Main Content Wrapper -->
+<main class="flex-1 flex flex-col h-screen overflow-hidden relative bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMiIgZmlsbD0iIzAwMCIgZmlsbC1vcGFjaXR5PSIwLjEiLz48L3N2Zz4=')]">
+<!-- JSON Component: TopAppBar -->
+<header class="h-20 w-full bg-surface-container-lowest brutal-border shadow-[0_8px_0_0_#000000] sticky top-0 z-30 flex items-center justify-between px-8 flex-shrink-0">
+<div class="flex items-center gap-4">
+<!-- Mobile Menu Trigger (hidden on desktop) -->
+<button class="md:hidden text-primary">
+<span class="material-symbols-outlined text-3xl">menu</span>
+</button>
+<h2 class="font-h2 text-h2 text-primary uppercase tracking-tighter hidden md:block">GUILDA_QG</h2>
+</div>
+<div class="flex items-center gap-6">
+<button class="text-primary hover:text-accent-pink transition-colors">
+<span class="material-symbols-outlined text-3xl">notifications</span>
+</button>
+<button class="text-primary hover:text-accent-cyan transition-colors">
+<span class="material-symbols-outlined text-3xl">terminal</span>
+</button>
+<button class="px-6 py-2 bg-accent-lime text-primary brutal-border brutal-shadow-sm font-label text-label uppercase brutal-active ml-4">
+                    DEPLOY
+                </button>
+</div>
+</header>
+<!-- Page Content: Deck Area -->
+<div class="flex-1 overflow-y-auto overflow-x-hidden p-margin flex flex-col">
+<!-- Page Header & Action -->
+<div class="flex flex-col lg:flex-row lg:items-end justify-between mb-12 gap-6">
+<div>
+<h1 class="font-h1 text-h1 text-primary uppercase leading-none drop-shadow-[4px_4px_0_rgba(0,229,255,1)]">ACTIVE ROSTER</h1>
+<p class="font-body-bold text-body-bold text-on-surface-variant mt-4 bg-accent-yellow inline-block px-4 py-1 brutal-border">SELECT OPERATIVE FOR DEPLOYMENT</p>
+</div>
+<button class="px-8 py-4 bg-accent-pink text-on-primary brutal-border brutal-shadow font-h3 text-h3 uppercase tracking-wider brutal-active hover:bg-primary transition-colors whitespace-nowrap">
+                    LER MINHA SINA
+                </button>
+</div>
+<!-- Horizontal Deck Scroll Container -->
+<div class="flex-1 w-full deck-scroll overflow-x-auto overflow-y-hidden pb-12 pt-4 flex gap-8 items-stretch px-4 snap-x snap-mandatory">
+<!-- Character Card 1 -->
+<article class="snap-center shrink-0 w-[340px] flex flex-col bg-surface-container-lowest brutal-border brutal-shadow brutal-shadow-hover transition-all duration-200 relative group cursor-crosshair">
+<!-- Portrait Area -->
+<div class="relative h-[300px] brutal-border border-x-0 border-t-0 bg-surface-dim overflow-hidden">
+<img class="w-full h-full object-cover grayscale mix-blend-luminosity group-hover:grayscale-0 group-hover:mix-blend-normal transition-all duration-300" data-alt="harshly lit stylized portrait of an asian woman with cybernetic facial implants in a dark neon alley" src="https://lh3.googleusercontent.com/aida-public/AB6AXuATJ4lFKkm-0JIqOwbOhzveR8VwxwEsoxWLCrN6E4qnkyj7U9lvPWu4WqZN9567SMUXj3xd-dylX8Tyo02yMzzNT79rP6K4HHeHkNzZCsxCGtw1X5YcO3uWv1lKQx0U61_lZXWh9UgbNXvQU9ff8dqr5Ir_LNN4cYQWGRS7iA0ODlh-eeb0rZElkWPkELlvodZoygJEmCarMOaSN69170KwmhWTM9R9ZSMTcry25gGUk9CBiop1Ywj3lzOjjuER88Z6v7H5alNuN-k"/>
+<div class="absolute inset-0 bg-accent-cyan/20 group-hover:bg-transparent transition-colors"></div>
+<!-- Level Badge -->
+<div class="absolute top-4 left-4 bg-accent-yellow text-primary brutal-border font-h3 text-h3 px-4 py-1 brutal-shadow-sm rotate-[-3deg] group-hover:rotate-0 transition-transform">
+                            LVL 54
+                        </div>
+<!-- Class Icon -->
+<div class="absolute bottom-4 right-4 bg-primary text-white p-2 brutal-border">
+<span class="material-symbols-outlined text-3xl">bolt</span>
+</div>
+</div>
+<!-- Info Area -->
+<div class="p-6 flex flex-col flex-1 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGxpbmUgeDE9IjAiIHkxPSIyMCIgeDI9IjIwIiB5Mj0iMCIgc3Ryb2tlPSIjZTJlMmUyIiBzdHJva2Utd2lkdGg9IjEiLz48L3N2Zz4=')]">
+<div class="bg-primary text-accent-cyan p-2 inline-block mb-2 brutal-border w-max">
+<h3 class="font-h2 text-[32px] leading-none uppercase">KAI_ZEN</h3>
+</div>
+<p class="font-label text-label text-on-surface-variant uppercase tracking-widest mb-6">Assault Vanguard</p>
+<!-- Skill Bars -->
+<div class="mt-auto flex flex-col gap-4">
+<div class="flex items-center gap-3">
+<span class="font-label text-label w-12 text-primary">STR</span>
+<div class="flex-1 h-6 brutal-border bg-surface-container relative overflow-hidden">
+<div class="absolute top-0 left-0 h-full bg-accent-pink w-[85%] border-r-4 border-primary"></div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="font-label text-label w-12 text-primary">AGI</span>
+<div class="flex-1 h-6 brutal-border bg-surface-container relative overflow-hidden">
+<div class="absolute top-0 left-0 h-full bg-accent-yellow w-[92%] border-r-4 border-primary"></div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="font-label text-label w-12 text-primary">INT</span>
+<div class="flex-1 h-6 brutal-border bg-surface-container relative overflow-hidden">
+<div class="absolute top-0 left-0 h-full bg-accent-cyan w-[40%] border-r-4 border-primary"></div>
+</div>
+</div>
+</div>
+</div>
+</article>
+<!-- Character Card 2 -->
+<article class="snap-center shrink-0 w-[340px] flex flex-col bg-surface-container-lowest brutal-border brutal-shadow brutal-shadow-hover transition-all duration-200 relative group cursor-crosshair">
+<!-- Portrait Area -->
+<div class="relative h-[300px] brutal-border border-x-0 border-t-0 bg-surface-dim overflow-hidden">
+<img class="w-full h-full object-cover grayscale mix-blend-luminosity group-hover:grayscale-0 group-hover:mix-blend-normal transition-all duration-300" data-alt="gritty close up of a man wearing a large gas mask and tactical hood against a stark concrete background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDYMSqZANVpEAM1C7kNnbhl5pWQm35k-xANU1Ab4xvezJabV-vUSjhQnACqHLhLw59GW55eBNEpZe4_wwgBgDU8nt0xvdkJ8HZ6ki2spxpcQEo-Bdkv9TKTuDm6Zp-xVdV4cZqdFvPr_L61RP6uQ0G6Zc44XJ2_Mg7x4wENGoCCfiNWcNCd71pOUeWv9-qp4Sw9dRTs36goCZFCQXyF_NmMAHLIluriqJC3h8Gmjve_a4cktEsFQUFNhIwFGcd5A3uzhN3RlLb7QuQ"/>
+<div class="absolute inset-0 bg-accent-pink/20 group-hover:bg-transparent transition-colors"></div>
+<!-- Level Badge -->
+<div class="absolute top-4 left-4 bg-accent-cyan text-primary brutal-border font-h3 text-h3 px-4 py-1 brutal-shadow-sm rotate-[2deg] group-hover:rotate-0 transition-transform">
+                            LVL 88
+                        </div>
+<!-- Class Icon -->
+<div class="absolute bottom-4 right-4 bg-primary text-white p-2 brutal-border">
+<span class="material-symbols-outlined text-3xl">target</span>
+</div>
+</div>
+<!-- Info Area -->
+<div class="p-6 flex flex-col flex-1 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGxpbmUgeDE9IjAiIHkxPSIyMCIgeDI9IjIwIiB5Mj0iMCIgc3Ryb2tlPSIjZTJlMmUyIiBzdHJva2Utd2lkdGg9IjEiLz48L3N2Zz4=')]">
+<div class="bg-primary text-accent-lime p-2 inline-block mb-2 brutal-border w-max">
+<h3 class="font-h2 text-[32px] leading-none uppercase">GHOST</h3>
+</div>
+<p class="font-label text-label text-on-surface-variant uppercase tracking-widest mb-6">Recon Sniper</p>
+<!-- Skill Bars -->
+<div class="mt-auto flex flex-col gap-4">
+<div class="flex items-center gap-3">
+<span class="font-label text-label w-12 text-primary">STR</span>
+<div class="flex-1 h-6 brutal-border bg-surface-container relative overflow-hidden">
+<div class="absolute top-0 left-0 h-full bg-accent-pink w-[30%] border-r-4 border-primary"></div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="font-label text-label w-12 text-primary">AGI</span>
+<div class="flex-1 h-6 brutal-border bg-surface-container relative overflow-hidden">
+<div class="absolute top-0 left-0 h-full bg-accent-yellow w-[98%] border-r-4 border-primary"></div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="font-label text-label w-12 text-primary">INT</span>
+<div class="flex-1 h-6 brutal-border bg-surface-container relative overflow-hidden">
+<div class="absolute top-0 left-0 h-full bg-accent-cyan w-[75%] border-r-4 border-primary"></div>
+</div>
+</div>
+</div>
+</div>
+</article>
+<!-- Character Card 3 -->
+<article class="snap-center shrink-0 w-[340px] flex flex-col bg-surface-container-lowest brutal-border brutal-shadow brutal-shadow-hover transition-all duration-200 relative group cursor-crosshair">
+<!-- Portrait Area -->
+<div class="relative h-[300px] brutal-border border-x-0 border-t-0 bg-surface-dim overflow-hidden">
+<img class="w-full h-full object-cover grayscale mix-blend-luminosity group-hover:grayscale-0 group-hover:mix-blend-normal transition-all duration-300" data-alt="stoic middle aged man with slicked back hair and augmented glowing eyes in a sharply tailored corporate suit" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA32Uk5I_-8nuNxgQYw6mmEePuejZmREsJbTsYKYoPwruewUajZvgUcV_crO_qhPvjL6OkKBOBrb2pahhF01-MOQWaaR5QU0cYNed7OIeKAVAiUzyY7gv6eWmIS_BkiHzTzTpNYQTvooJwfhMvwLqZ3muYihkroPezLbqnYWWGp0p0GFbOadsvkgtd7Aq9ojyZDx_zOr4HTA3kbR3hwlSdM-0Q7TQKxKitzLhaUMcvDjBLR6uqDSUyBx_87jFI8HO9eXY-r4OUBi_M"/>
+<div class="absolute inset-0 bg-accent-lime/20 group-hover:bg-transparent transition-colors"></div>
+<!-- Level Badge -->
+<div class="absolute top-4 left-4 bg-accent-pink text-on-primary brutal-border font-h3 text-h3 px-4 py-1 brutal-shadow-sm rotate-[-1deg] group-hover:rotate-0 transition-transform">
+                            LVL 99
+                        </div>
+<!-- Class Icon -->
+<div class="absolute bottom-4 right-4 bg-primary text-white p-2 brutal-border">
+<span class="material-symbols-outlined text-3xl">psychiatry</span>
+</div>
+</div>
+<!-- Info Area -->
+<div class="p-6 flex flex-col flex-1 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGxpbmUgeDE9IjAiIHkxPSIyMCIgeDI9IjIwIiB5Mj0iMCIgc3Ryb2tlPSIjZTJlMmUyIiBzdHJva2Utd2lkdGg9IjEiLz48L3N2Zz4=')]">
+<div class="bg-primary text-accent-yellow p-2 inline-block mb-2 brutal-border w-max">
+<h3 class="font-h2 text-[32px] leading-none uppercase">THE_SUIT</h3>
+</div>
+<p class="font-label text-label text-on-surface-variant uppercase tracking-widest mb-6">Corporate Fixer</p>
+<!-- Skill Bars -->
+<div class="mt-auto flex flex-col gap-4">
+<div class="flex items-center gap-3">
+<span class="font-label text-label w-12 text-primary">STR</span>
+<div class="flex-1 h-6 brutal-border bg-surface-container relative overflow-hidden">
+<div class="absolute top-0 left-0 h-full bg-accent-pink w-[15%] border-r-4 border-primary"></div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="font-label text-label w-12 text-primary">AGI</span>
+<div class="flex-1 h-6 brutal-border bg-surface-container relative overflow-hidden">
+<div class="absolute top-0 left-0 h-full bg-accent-yellow w-[40%] border-r-4 border-primary"></div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="font-label text-label w-12 text-primary">INT</span>
+<div class="flex-1 h-6 brutal-border bg-surface-container relative overflow-hidden">
+<div class="absolute top-0 left-0 h-full bg-accent-cyan w-[100%] border-r-4 border-primary"></div>
+</div>
+</div>
+</div>
+</div>
+</article>
+<!-- Add New Empty Slot Card for visual rhythm -->
+<article class="snap-center shrink-0 w-[340px] flex flex-col bg-surface-container-low brutal-border brutal-shadow items-center justify-center p-8 border-dashed border-opacity-50 border-primary">
+<div class="w-24 h-24 rounded-full border-4 border-dashed border-primary flex items-center justify-center text-primary opacity-50 mb-6">
+<span class="material-symbols-outlined text-5xl">add</span>
+</div>
+<h3 class="font-h3 text-h3 text-primary uppercase text-center opacity-50">RECRUIT <br/> OPERATIVE</h3>
+</article>
+</div>
+</div>
+</main>
+</body></html>

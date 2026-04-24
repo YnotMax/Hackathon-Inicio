@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ORÁCULO: ANÁLISE DE MATCH</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&amp;family=Space+Grotesk:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed": "#1b1b1b",
+                        "accent-pink": "#FF2E93",
+                        "outline": "#7e7576",
+                        "on-surface": "#1b1b1b",
+                        "inverse-primary": "#c6c6c6",
+                        "tertiary-fixed": "#e2e2e2",
+                        "surface": "#f9f9f9",
+                        "tertiary-fixed-dim": "#c6c6c6",
+                        "outline-variant": "#cfc4c5",
+                        "background-main": "#F4F4F0",
+                        "on-tertiary-fixed": "#1b1b1b",
+                        "accent-yellow": "#FFC900",
+                        "surface-variant": "#e2e2e2",
+                        "on-error": "#ffffff",
+                        "surface-tint": "#5e5e5e",
+                        "background": "#f9f9f9",
+                        "surface-bright": "#f9f9f9",
+                        "on-tertiary-fixed-variant": "#474747",
+                        "secondary-fixed": "#ffdf91",
+                        "surface-container-high": "#e8e8e8",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed-variant": "#474747",
+                        "on-background": "#1b1b1b",
+                        "on-tertiary-container": "#848484",
+                        "on-secondary-fixed-variant": "#584400",
+                        "border-primary": "#000000",
+                        "error-container": "#ffdad6",
+                        "on-primary": "#ffffff",
+                        "primary-fixed": "#e2e2e2",
+                        "secondary-container": "#fdc800",
+                        "tertiary": "#000000",
+                        "secondary-fixed-dim": "#f3c000",
+                        "on-primary-container": "#848484",
+                        "secondary": "#755b00",
+                        "surface-container-highest": "#e2e2e2",
+                        "primary": "#000000",
+                        "surface-container-low": "#f3f3f3",
+                        "primary-fixed-dim": "#c6c6c6",
+                        "inverse-on-surface": "#f1f1f1",
+                        "background-alt": "#E5E5E5",
+                        "surface-dim": "#dadada",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-container": "#1b1b1b",
+                        "accent-cyan": "#00E5FF",
+                        "on-surface-variant": "#4c4546",
+                        "primary-container": "#1b1b1b",
+                        "on-secondary-fixed": "#241a00",
+                        "error": "#ba1a1a",
+                        "on-error-container": "#93000a",
+                        "accent-lime": "#B8FF29",
+                        "surface-container": "#eeeeee",
+                        "inverse-surface": "#303030",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-container": "#6d5500"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "margin": "32px",
+                        "border-width": "3px",
+                        "card-padding": "24px",
+                        "unit": "4px"
+                    },
+                    "fontFamily": {
+                        "body": ["Inter"],
+                        "label": ["Space Grotesk"],
+                        "h2": ["Space Grotesk"],
+                        "h1": ["Space Grotesk"],
+                        "h3": ["Space Grotesk"],
+                        "body-bold": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "label": ["14px", { "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "h2": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.03em", "fontWeight": "800" }],
+                        "h1": ["96px", { "lineHeight": "1.0", "letterSpacing": "-0.05em", "fontWeight": "800" }],
+                        "h3": ["24px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "body-bold": ["16px", { "lineHeight": "1.6", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background-main text-on-background font-body antialiased min-h-screen flex">
+<!-- SideNavBar -->
+<nav class="hidden md:flex bg-white dark:bg-zinc-900 text-black dark:text-white font-['Space_Grotesk'] font-bold uppercase h-screen w-64 border-r-4 border-black shadow-[8px_0px_0px_0px_rgba(0,0,0,1)] fixed left-0 top-0 flex-col z-40">
+<div class="p-6 border-b-4 border-black bg-accent-yellow">
+<div class="flex items-center gap-3">
+<img alt="Command Center Logo" class="w-10 h-10 border-2 border-black object-cover bg-white" data-alt="high contrast abstract geometric shape functioning as a brutalist logo inside a square border" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDfZxW3AhMpeV5fCBLJLIW9VWEb7oQmg_BdkCxyfb4DLKdLYqqHcFg3ZBI81hiHjNf66rjse5CCFZGyRaDqpiNa00Qpl9J5zloT9ocC5_WLbmukfDJ3HxnpGImX0Q6_tOHvbCpDtU1cSQ5RIMIhofMn6iLxAEUZa1IrScz82C34JTJTKXNBPdjVNa3Lbx3twImKHuVIk2vo93XYhZ16CEIM-4pN9dZQDj4K4mdeID0O2C2NDsYMXd7It3EhMJKL2405L1pQn6AQfvc"/>
+<div>
+<div class="text-xl font-black tracking-widest text-black dark:text-white">ORACLE_HQ</div>
+<div class="text-xs tracking-widest text-black/70">SECTOR_07</div>
+</div>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto flex flex-col pt-4">
+<a class="text-black dark:text-white p-4 border-b-2 border-black/10 hover:bg-pink-400 hover:text-black transition-colors active:translate-x-1 flex items-center gap-3" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+                DASHBOARD
+            </a>
+<a class="bg-lime-400 text-black border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] m-2 p-4 active:translate-x-1 flex items-center gap-3" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">troubleshoot</span>
+                MATCH_ENGINE
+            </a>
+<a class="text-black dark:text-white p-4 border-b-2 border-black/10 hover:bg-pink-400 hover:text-black transition-colors active:translate-x-1 flex items-center gap-3" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">analytics</span>
+                RESOURCES
+            </a>
+<a class="text-black dark:text-white p-4 border-b-2 border-black/10 hover:bg-pink-400 hover:text-black transition-colors active:translate-x-1 flex items-center gap-3" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">terminal</span>
+                SYSTEM_LOGS
+            </a>
+</div>
+<div class="p-4 border-t-4 border-black bg-white">
+<button class="w-full bg-accent-pink border-[3px] border-black text-black font-label py-3 px-4 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-x-[6px] active:translate-y-[6px] active:shadow-none transition-all flex justify-center items-center gap-2">
+<span class="material-symbols-outlined">radar</span>
+                INITIATE_SCAN
+            </button>
+</div>
+</nav>
+<!-- TopAppBar for Mobile -->
+<header class="md:hidden bg-white dark:bg-black text-black dark:text-white font-['Space_Grotesk'] font-bold uppercase tracking-tighter docked full-width top-0 border-b-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] flex justify-between items-center w-full px-6 py-4 fixed z-40">
+<div class="text-2xl font-black text-black dark:text-white border-2 border-black px-2 bg-accent-yellow">
+            ORACLE_STRATEGY_V1
+        </div>
+<div class="flex gap-4">
+<span class="material-symbols-outlined cursor-pointer hover:text-accent-pink active:translate-x-[2px] active:translate-y-[2px]">settings</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-accent-pink active:translate-x-[2px] active:translate-y-[2px]">notifications</span>
+<img alt="User Avatar" class="w-8 h-8 border-2 border-black bg-white object-cover" data-alt="close up of a generic male face with neutral expression against solid background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD7VpeZMql4MV5ZmxkSktIhxJGXwfYEvKizYetvf8eOJzHkuL_JthYgCcrpsy95d3QOiWYFz41wY_WMaigoknAc7r98f30sNzcK69ev4xQssiv_Zozx_7R7R-YXx4k_tSn50FjpecSBVaQfFNU074krdrk7VGwQJjugR_tsNpRJzRHzz3eQl8AHIGQvuwY76XmLidND81CTrBuNbpGVDftJmYHTZFRXFoQBuPJAtAPUfXNG9BnL2kSi2KACrwqH7BD9-M5eGtLhlsg"/>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 md:ml-64 pt-24 md:pt-8 px-margin pb-24 md:pb-8 w-full max-w-[1600px] mx-auto overflow-x-hidden">
+<!-- Header Section -->
+<div class="mb-gutter flex flex-col md:flex-row justify-between items-start md:items-end gap-6 border-b-[6px] border-black pb-8">
+<div>
+<h1 class="font-h1 text-h1 text-black uppercase break-words drop-shadow-[4px_4px_0px_rgba(255,201,0,1)]">ORÁCULO: ANÁLISE DE MATCH</h1>
+<p class="font-body-bold text-body-bold text-on-surface-variant mt-4 max-w-2xl bg-white border-2 border-black p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                    ALGORITHM_STATUS: <span class="text-accent-pink uppercase font-bold blink">ACTIVE</span> | CONFIDENCE_THRESHOLD: &gt;85%
+                </p>
+</div>
+<!-- Global Actions -->
+<div class="flex gap-4 w-full md:w-auto">
+<button class="flex-1 md:flex-none bg-accent-cyan border-[3px] border-black text-black font-label py-3 px-6 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-x-[6px] active:translate-y-[6px] active:shadow-none transition-all flex justify-center items-center gap-2">
+<span class="material-symbols-outlined">sync</span>
+                    RE-RUN
+                </button>
+<button class="flex-1 md:flex-none bg-accent-lime border-[3px] border-black text-black font-label py-3 px-6 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-x-[6px] active:translate-y-[6px] active:shadow-none transition-all flex justify-center items-center gap-2">
+<span class="material-symbols-outlined">download</span>
+                    EXPORT
+                </button>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- RAG Analysis Banner (Full Width) -->
+<div class="col-span-1 md:col-span-12 bg-white border-[6px] border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] p-card-padding relative overflow-hidden group">
+<!-- Background Pattern -->
+<div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: radial-gradient(#000 2px, transparent 2px); background-size: 20px 20px;"></div>
+<div class="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+<div class="flex-1">
+<div class="inline-block bg-black text-white font-label px-3 py-1 mb-4">RAG_ANALYSIS_ENGINE</div>
+<h2 class="font-h2 text-h2 uppercase text-black mb-2">HACKATHON CHALLENGE PARSER</h2>
+<p class="font-body text-body max-w-3xl">
+                            O sistema RAG processou 142 documentos, extraindo requisitos técnicos, critérios de avaliação e restrições de infraestrutura. Os matches abaixo representam as convergências mais fortes entre as habilidades cadastradas da equipe e os vetores de desafio identificados.
+                        </p>
+</div>
+<!-- Stats Blocks -->
+<div class="flex gap-4 w-full md:w-auto">
+<div class="bg-accent-yellow border-4 border-black p-4 text-center min-w-[120px] shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transform group-hover:-rotate-2 transition-transform">
+<div class="font-h3 text-h3 font-black">142</div>
+<div class="font-label text-[10px] uppercase">DOCS_PROCESSED</div>
+</div>
+<div class="bg-accent-pink border-4 border-black p-4 text-center min-w-[120px] shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transform group-hover:rotate-2 transition-transform">
+<div class="font-h3 text-h3 font-black text-white">98%</div>
+<div class="font-label text-[10px] uppercase text-white">VECTOR_ACCURACY</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Match Card 1: High Confidence -->
+<div class="col-span-1 md:col-span-4 bg-accent-lime border-[6px] border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] p-card-padding flex flex-col hover:-translate-y-2 hover:rotate-1 transition-all duration-300">
+<div class="flex justify-between items-start mb-6 border-b-4 border-black pb-4">
+<div class="font-h3 text-h3 uppercase font-black">CHALLENGE_A</div>
+<div class="bg-black text-accent-lime font-label px-2 py-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">target</span>
+                        94% MATCH
+                    </div>
+</div>
+<h3 class="font-body-bold text-body-bold uppercase mb-4 h-12">OTIMIZAÇÃO DE REDE LOGÍSTICA COM IA</h3>
+<div class="space-y-4 flex-1">
+<div>
+<div class="font-label text-xs uppercase mb-1">SKILL_VECTORS</div>
+<div class="flex flex-wrap gap-2">
+<span class="bg-white border-2 border-black px-2 py-1 font-label text-[10px]">PYTHON</span>
+<span class="bg-white border-2 border-black px-2 py-1 font-label text-[10px]">TENSORFLOW</span>
+<span class="bg-white border-2 border-black px-2 py-1 font-label text-[10px]">GRAPH_THEORY</span>
+</div>
+</div>
+<div>
+<div class="font-label text-xs uppercase mb-1">MISSING_COMPONENTS</div>
+<div class="bg-black text-white font-body text-sm p-2 border-l-4 border-accent-pink">
+                            - EXPERTISE_GIS_ROUTING<br/>
+                            - KUBERNETES_DEVOPS
+                        </div>
+</div>
+</div>
+<button class="mt-6 w-full bg-white border-[3px] border-black text-black font-label py-2 px-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-black hover:text-white transition-colors uppercase">
+                    VIEW_DETAILS
+                </button>
+</div>
+<!-- Match Card 2: Medium Confidence -->
+<div class="col-span-1 md:col-span-4 bg-accent-cyan border-[6px] border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] p-card-padding flex flex-col hover:-translate-y-2 hover:-rotate-1 transition-all duration-300">
+<div class="flex justify-between items-start mb-6 border-b-4 border-black pb-4">
+<div class="font-h3 text-h3 uppercase font-black">CHALLENGE_B</div>
+<div class="bg-black text-accent-cyan font-label px-2 py-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">target</span>
+                        82% MATCH
+                    </div>
+</div>
+<h3 class="font-body-bold text-body-bold uppercase mb-4 h-12">AUTENTICAÇÃO BIOMÉTRICA DESCENTRALIZADA</h3>
+<div class="space-y-4 flex-1">
+<div>
+<div class="font-label text-xs uppercase mb-1">SKILL_VECTORS</div>
+<div class="flex flex-wrap gap-2">
+<span class="bg-white border-2 border-black px-2 py-1 font-label text-[10px]">RUST</span>
+<span class="bg-white border-2 border-black px-2 py-1 font-label text-[10px]">CRYPTOGRAPHY</span>
+<span class="bg-white border-2 border-black px-2 py-1 font-label text-[10px]">WEB3</span>
+</div>
+</div>
+<div>
+<div class="font-label text-xs uppercase mb-1">MISSING_COMPONENTS</div>
+<div class="bg-black text-white font-body text-sm p-2 border-l-4 border-accent-yellow">
+                            - COMPUTER_VISION_MODELS<br/>
+                            - HARDWARE_SEC_ENCLAVE
+                        </div>
+</div>
+</div>
+<button class="mt-6 w-full bg-white border-[3px] border-black text-black font-label py-2 px-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-black hover:text-white transition-colors uppercase">
+                    VIEW_DETAILS
+                </button>
+</div>
+<!-- Match Card 3: Discovery/Wildcard -->
+<div class="col-span-1 md:col-span-4 bg-accent-pink border-[6px] border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] p-card-padding flex flex-col hover:-translate-y-2 hover:rotate-1 transition-all duration-300">
+<div class="flex justify-between items-start mb-6 border-b-4 border-black pb-4">
+<div class="font-h3 text-h3 uppercase font-black text-white">CHALLENGE_C</div>
+<div class="bg-black text-accent-pink font-label px-2 py-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">star</span>
+                        WILDCARD
+                    </div>
+</div>
+<h3 class="font-body-bold text-body-bold uppercase mb-4 h-12 text-white">GAMIFICAÇÃO DE EDUCAÇÃO FINANCEIRA B2B</h3>
+<div class="space-y-4 flex-1">
+<div>
+<div class="font-label text-xs uppercase mb-1 text-white">SKILL_VECTORS</div>
+<div class="flex flex-wrap gap-2">
+<span class="bg-white border-2 border-black px-2 py-1 font-label text-[10px]">REACT</span>
+<span class="bg-white border-2 border-black px-2 py-1 font-label text-[10px]">NODE.JS</span>
+<span class="bg-white border-2 border-black px-2 py-1 font-label text-[10px]">UI/UX</span>
+</div>
+</div>
+<div>
+<div class="font-label text-xs uppercase mb-1 text-white">RAG_INSIGHT</div>
+<div class="bg-black text-white font-body text-sm p-2 border-l-4 border-accent-lime">
+                            BAIXA COMPETIÇÃO DETECTADA. ALTO ALINHAMENTO COM PORTFÓLIO DE DESIGN DA EQUIPE.
+                        </div>
+</div>
+</div>
+<button class="mt-6 w-full bg-white border-[3px] border-black text-black font-label py-2 px-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-black hover:text-white transition-colors uppercase">
+                    VIEW_DETAILS
+                </button>
+</div>
+<!-- Skill Gap Analysis Matrix -->
+<div class="col-span-1 md:col-span-8 bg-white border-[6px] border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] p-card-padding">
+<div class="flex items-center gap-3 mb-6 border-b-4 border-black pb-4">
+<span class="material-symbols-outlined text-3xl">grid_4x4</span>
+<h2 class="font-h3 text-h3 uppercase font-black">SKILL_GAP_MATRIX</h2>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<!-- Matrix Cell -->
+<div class="border-2 border-black p-3 bg-surface-container-low hover:bg-accent-yellow transition-colors cursor-crosshair">
+<div class="font-label text-xs mb-2">FRONTEND</div>
+<div class="w-full bg-white border-2 border-black h-4">
+<div class="bg-black h-full w-[90%] border-r-2 border-black"></div>
+</div>
+<div class="text-right font-label text-xs mt-1">90%</div>
+</div>
+<!-- Matrix Cell -->
+<div class="border-2 border-black p-3 bg-surface-container-low hover:bg-accent-yellow transition-colors cursor-crosshair">
+<div class="font-label text-xs mb-2">BACKEND</div>
+<div class="w-full bg-white border-2 border-black h-4">
+<div class="bg-black h-full w-[75%] border-r-2 border-black"></div>
+</div>
+<div class="text-right font-label text-xs mt-1">75%</div>
+</div>
+<!-- Matrix Cell -->
+<div class="border-2 border-black p-3 bg-surface-container-low hover:bg-accent-yellow transition-colors cursor-crosshair">
+<div class="font-label text-xs mb-2">DATA_SCIENCE</div>
+<div class="w-full bg-white border-2 border-black h-4">
+<div class="bg-accent-pink h-full w-[40%] border-r-2 border-black"></div>
+</div>
+<div class="text-right font-label text-xs mt-1 text-accent-pink font-bold">40%</div>
+</div>
+<!-- Matrix Cell -->
+<div class="border-2 border-black p-3 bg-surface-container-low hover:bg-accent-yellow transition-colors cursor-crosshair">
+<div class="font-label text-xs mb-2">DEVOPS</div>
+<div class="w-full bg-white border-2 border-black h-4">
+<div class="bg-accent-pink h-full w-[25%] border-r-2 border-black"></div>
+</div>
+<div class="text-right font-label text-xs mt-1 text-accent-pink font-bold">25%</div>
+</div>
+</div>
+<div class="mt-6 bg-black text-accent-lime font-label p-3 text-sm flex items-start gap-2">
+<span class="material-symbols-outlined shrink-0">warning</span>
+<span>ALERTA_ESTRATÉGICO: BUSCAR MEMBRO COM PERFIL [DEVOPS/INFRA] PARA MAXIMIZAR CHANCES NO CHALLENGE_A.</span>
+</div>
+</div>
+<!-- Terminal Output Snippet -->
+<div class="col-span-1 md:col-span-4 bg-black border-[6px] border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] p-card-padding font-['Space_Grotesk'] text-accent-lime flex flex-col">
+<div class="flex items-center gap-2 mb-4 border-b-2 border-accent-lime/30 pb-2">
+<span class="material-symbols-outlined text-sm">terminal</span>
+<span class="font-label text-xs uppercase">RAG_ENGINE_LOGS</span>
+</div>
+<div class="text-xs space-y-2 flex-1 overflow-y-auto max-h-[200px] opacity-80 leading-relaxed">
+<div>&gt; Init vector search...</div>
+<div>&gt; Connecting to knowledge graph... [OK]</div>
+<div>&gt; Query: "hackathon rules &amp;&amp; evaluation criteria"</div>
+<div class="text-white">&gt; Extracting key entities...</div>
+<div>&gt; Found 3 primary challenges.</div>
+<div>&gt; Calculating cosine similarity against team profile...</div>
+<div class="text-accent-pink">&gt; WARN: Missing hard constraint in Challenge_A (Kubernetes)</div>
+<div>&gt; Generating match probabilities...</div>
+<div class="text-white">&gt; Output rendered to visual matrix.</div>
+<div class="animate-pulse">_</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar for Mobile -->
+<nav class="md:hidden bg-white text-black font-['Space_Grotesk'] font-bold uppercase w-full border-t-4 border-black fixed bottom-0 z-40 flex justify-around items-center">
+<a class="flex flex-col items-center justify-center w-full py-3 hover:bg-gray-100 transition-colors" href="#">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="text-[10px]">DASH</span>
+</a>
+<a class="flex flex-col items-center justify-center w-full py-3 bg-lime-400 border-x-4 border-black border-t-4 -mt-4 shadow-[0px_-4px_0px_0px_rgba(0,0,0,1)]" href="#">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">troubleshoot</span>
+<span class="text-[10px]">MATCH</span>
+</a>
+<a class="flex flex-col items-center justify-center w-full py-3 hover:bg-gray-100 transition-colors" href="#">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">analytics</span>
+<span class="text-[10px]">RSRC</span>
+</a>
+</nav>
+<style>
+        .blink { animation: blinker 1.5s linear infinite; }
+        @keyframes blinker { 50% { opacity: 0; } }
+    </style>
+</body></html>

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Onboarding - Mapeamento do Membro</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&amp;family=Space+Grotesk:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-high": "#e8e8e8",
+                        "on-tertiary": "#ffffff",
+                        "inverse-on-surface": "#f1f1f1",
+                        "on-background": "#1b1b1b",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed-variant": "#474747",
+                        "on-primary-fixed-variant": "#474747",
+                        "secondary-container": "#fdc800",
+                        "background": "#f9f9f9",
+                        "primary-fixed-dim": "#c6c6c6",
+                        "surface-container-highest": "#e2e2e2",
+                        "on-surface-variant": "#4c4546",
+                        "border-primary": "#000000",
+                        "on-secondary-container": "#6d5500",
+                        "on-primary-fixed": "#1b1b1b",
+                        "primary-container": "#1b1b1b",
+                        "on-primary-container": "#848484",
+                        "on-secondary": "#ffffff",
+                        "surface-dim": "#dadada",
+                        "tertiary-container": "#1b1b1b",
+                        "on-tertiary-fixed": "#1b1b1b",
+                        "accent-pink": "#FF2E93",
+                        "primary": "#000000",
+                        "surface": "#f9f9f9",
+                        "tertiary": "#000000",
+                        "accent-cyan": "#00E5FF",
+                        "background-alt": "#E5E5E5",
+                        "surface-container": "#eeeeee",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "secondary": "#755b00",
+                        "surface-container-low": "#f3f3f3",
+                        "on-secondary-fixed-variant": "#584400",
+                        "on-error": "#ffffff",
+                        "background-main": "#F4F4F0",
+                        "secondary-fixed": "#ffdf91",
+                        "surface-tint": "#5e5e5e",
+                        "outline": "#7e7576",
+                        "on-secondary-fixed": "#241a00",
+                        "secondary-fixed-dim": "#f3c000",
+                        "tertiary-fixed-dim": "#c6c6c6",
+                        "on-error-container": "#93000a",
+                        "inverse-primary": "#c6c6c6",
+                        "surface-variant": "#e2e2e2",
+                        "inverse-surface": "#303030",
+                        "on-tertiary-container": "#848484",
+                        "on-surface": "#1b1b1b",
+                        "outline-variant": "#cfc4c5",
+                        "accent-yellow": "#FFC900",
+                        "surface-bright": "#f9f9f9",
+                        "primary-fixed": "#e2e2e2",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed": "#e2e2e2",
+                        "accent-lime": "#B8FF29"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin": "32px",
+                        "gutter": "24px",
+                        "unit": "4px",
+                        "card-padding": "24px",
+                        "border-width": "3px"
+                    },
+                    "fontFamily": {
+                        "label": ["Space Grotesk"],
+                        "body-bold": ["Inter"],
+                        "h2": ["Space Grotesk"],
+                        "h3": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "h1": ["Space Grotesk"]
+                    },
+                    "fontSize": {
+                        "label": ["14px", { "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "body-bold": ["16px", { "lineHeight": "1.6", "fontWeight": "700" }],
+                        "h2": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.03em", "fontWeight": "800" }],
+                        "h3": ["24px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "body": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "h1": ["96px", { "lineHeight": "1.0", "letterSpacing": "-0.05em", "fontWeight": "800" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .neo-shadow {
+            box-shadow: 6px 6px 0px 0px #000000;
+        }
+        .neo-btn:active {
+            transform: translate(6px, 6px);
+            box-shadow: none;
+        }
+        .card-hover:hover {
+            transform: rotate(1deg) scale(1.02);
+            transition: transform 0.2s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-background-main text-primary min-h-screen font-body relative pb-24 md:pb-0">
+<!-- Canvas principal -->
+<main class="w-full max-w-7xl mx-auto px-margin py-margin flex flex-col gap-gutter">
+<!-- Header Section -->
+<header class="border-4 border-primary bg-surface-container-lowest p-card-padding neo-shadow mb-8">
+<h1 class="font-h1 text-h1 uppercase mb-4 break-words">SINC. MEMBRO</h1>
+<p class="font-body-bold text-body-bold text-on-surface-variant uppercase">CALIBRAÇÃO DE HABILIDADES E PREFERÊNCIAS</p>
+</header>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Esquerda: Sliders de Skills (Colunas 1-5) -->
+<section class="lg:col-span-5 bg-surface-container-lowest border-4 border-primary p-card-padding neo-shadow flex flex-col gap-6">
+<h2 class="font-h2 text-h2 uppercase border-b-4 border-primary pb-4 mb-2">RADAR TECH</h2>
+<!-- Slider Item: Frontend -->
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-center">
+<span class="font-label text-label uppercase">FRONTEND</span>
+<span class="font-body-bold text-body-bold">8/10</span>
+</div>
+<div class="h-8 w-full border-4 border-primary bg-surface-variant relative flex items-center">
+<div class="h-full bg-accent-cyan w-[80%] border-r-4 border-primary"></div>
+<div class="w-6 h-10 bg-primary absolute left-[80%] -translate-x-1/2 -translate-y-1"></div>
+</div>
+</div>
+<!-- Slider Item: Backend -->
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-center">
+<span class="font-label text-label uppercase">BACKEND</span>
+<span class="font-body-bold text-body-bold">6/10</span>
+</div>
+<div class="h-8 w-full border-4 border-primary bg-surface-variant relative flex items-center">
+<div class="h-full bg-accent-cyan w-[60%] border-r-4 border-primary"></div>
+<div class="w-6 h-10 bg-primary absolute left-[60%] -translate-x-1/2 -translate-y-1"></div>
+</div>
+</div>
+<!-- Slider Item: UX -->
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-center">
+<span class="font-label text-label uppercase">UX / UI</span>
+<span class="font-body-bold text-body-bold">9/10</span>
+</div>
+<div class="h-8 w-full border-4 border-primary bg-surface-variant relative flex items-center">
+<div class="h-full bg-accent-cyan w-[90%] border-r-4 border-primary"></div>
+<div class="w-6 h-10 bg-primary absolute left-[90%] -translate-x-1/2 -translate-y-1"></div>
+</div>
+</div>
+<!-- Slider Item: Dados -->
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-center">
+<span class="font-label text-label uppercase">DADOS</span>
+<span class="font-body-bold text-body-bold">4/10</span>
+</div>
+<div class="h-8 w-full border-4 border-primary bg-surface-variant relative flex items-center">
+<div class="h-full bg-accent-cyan w-[40%] border-r-4 border-primary"></div>
+<div class="w-6 h-10 bg-primary absolute left-[40%] -translate-x-1/2 -translate-y-1"></div>
+</div>
+</div>
+<!-- Slider Item: IA -->
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-center">
+<span class="font-label text-label uppercase">IA / ML</span>
+<span class="font-body-bold text-body-bold">7/10</span>
+</div>
+<div class="h-8 w-full border-4 border-primary bg-surface-variant relative flex items-center">
+<div class="h-full bg-accent-cyan w-[70%] border-r-4 border-primary"></div>
+<div class="w-6 h-10 bg-primary absolute left-[70%] -translate-x-1/2 -translate-y-1"></div>
+</div>
+</div>
+</section>
+<!-- Direita: Team Canvas Cards (Colunas 6-12) -->
+<section class="lg:col-span-7 flex flex-col gap-gutter">
+<!-- Card 1: Ama -->
+<div class="bg-accent-lime border-4 border-primary p-card-padding neo-shadow card-hover flex flex-col gap-4">
+<div class="flex items-center gap-4 border-b-4 border-primary pb-2">
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<h3 class="font-h3 text-h3 uppercase">O QUE VOCÊ AMA?</h3>
+</div>
+<textarea class="w-full bg-transparent border-none outline-none font-body-bold text-body-bold placeholder-primary/50 resize-none h-24" placeholder="Descreva as tecnologias ou processos que fazem seu olho brilhar..."></textarea>
+</div>
+<!-- Card 2: Garante -->
+<div class="bg-accent-yellow border-4 border-primary p-card-padding neo-shadow card-hover flex flex-col gap-4">
+<div class="flex items-center gap-4 border-b-4 border-primary pb-2">
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">military_tech</span>
+<h3 class="font-h3 text-h3 uppercase">ONDE SE GARANTE?</h3>
+</div>
+<textarea class="w-full bg-transparent border-none outline-none font-body-bold text-body-bold placeholder-primary/50 resize-none h-24" placeholder="Sua especialidade core. Onde você entrega resultado rápido..."></textarea>
+</div>
+<!-- Card 3: Veto -->
+<div class="bg-accent-pink border-4 border-primary p-card-padding neo-shadow card-hover flex flex-col gap-4">
+<div class="flex items-center gap-4 border-b-4 border-primary pb-2">
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">block</span>
+<h3 class="font-h3 text-h3 uppercase text-on-tertiary">NEM FUDENDO (VETO)</h3>
+</div>
+<textarea class="w-full bg-transparent border-none outline-none font-body-bold text-body-bold text-on-tertiary placeholder-on-tertiary/70 resize-none h-24" placeholder="Tarefas ou stacks que você se recusa a tocar..."></textarea>
+</div>
+</section>
+</div>
+<!-- Submit Button -->
+<div class="w-full flex justify-end mt-8">
+<button class="bg-primary text-on-primary font-label text-label uppercase py-4 px-12 border-4 border-primary neo-shadow neo-btn flex items-center gap-2">
+<span>INICIALIZAR MEMBRO</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">rocket_launch</span>
+</button>
+</div>
+</main>
+</body></html>

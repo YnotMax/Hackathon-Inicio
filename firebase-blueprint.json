@@ -1,0 +1,46 @@
+{
+  "entities": {
+    "Member": {
+      "title": "Member Profile",
+      "description": "Represents a member of the guild and their skills.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "The UID of the user" },
+        "guildId": { "type": "string", "description": "The ID of the guild the user belongs to" },
+        "name": { "type": "string", "description": "Protocolo de Chamada" },
+        "github": { "type": "string" },
+        "linkedin": { "type": "string" },
+        "skills": {
+          "type": "object",
+          "properties": {
+            "frontend": { "type": "number", "minimum": 1, "maximum": 10 },
+            "backend": { "type": "number", "minimum": 1, "maximum": 10 },
+            "ux_ui": { "type": "number", "minimum": 1, "maximum": 10 },
+            "dados": { "type": "number", "minimum": 1, "maximum": 10 },
+            "hardware_android": { "type": "number", "minimum": 1, "maximum": 10 },
+            "vibe_coding": { "type": "number", "minimum": 1, "maximum": 10 }
+          },
+          "required": ["frontend", "backend", "ux_ui", "dados", "hardware_android", "vibe_coding"]
+        },
+        "canvas": {
+          "type": "object",
+          "properties": {
+            "loves": { "type": "string" },
+            "comfort": { "type": "string" },
+            "veto": { "type": "string" }
+          },
+          "required": ["loves", "comfort", "veto"]
+        },
+        "roast": { "type": "string", "description": "The AI generated roast" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "guildId", "name", "skills", "canvas", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/members/{userId}": {
+      "schema": { "$ref": "#/entities/Member" },
+      "description": "Guild members profiles, keyed by their auth UID"
+    }
+  }
+}

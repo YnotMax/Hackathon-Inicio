@@ -1,0 +1,71 @@
+import React from "react";
+import { Outlet, NavLink, useLocation } from "react-router-dom";
+import { Terminal, User as UserIcon } from "lucide-react";
+import { useAuth } from "../contexts/AuthContext";
+
+export default function RootLayout() {
+  const location = useLocation();
+  const { user } = useAuth();
+
+  const links = [
+    { name: "O BUNKER", path: "/" },
+    { name: "ONBOARDING", path: "/onboarding" },
+    { name: "A GUILDA", path: "/guilda" },
+    { name: "ORÁCULO", path: "/oraculo" },
+  ];
+
+  return (
+    <div className="min-h-screen bg-neo-bg text-neo-black selection:bg-neo-lime selection:text-neo-black font-sans relative">
+      <nav className="border-b-[4px] border-neo-black bg-white sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between p-4 px-6 gap-4">
+          <div className="flex items-center gap-3">
+             <div className="bg-neo-black p-2"><Terminal className="text-neo-lime w-6 h-6" /></div>
+             <span className="font-heading font-black text-2xl uppercase tracking-tighter">CMD_BUNKER</span>
+          </div>
+          
+          <div className="flex flex-wrap items-center justify-center gap-2 md:gap-4">
+            {links.map((link) => {
+              const isActive = location.pathname === link.path;
+              return (
+                <NavLink
+                  key={link.path}
+                  to={link.path}
+                  className={`
+                    px-4 py-2 font-heading font-bold uppercase transition-transform hover:-translate-y-1 hover:shadow-[4px_4px_0_0_#000] border-[3px] border-transparent
+                    ${isActive 
+                        ? 'bg-neo-lime text-neo-black border-[3px] !border-neo-black shadow-[4px_4px_0_0_#000] translate-y-0' 
+                        : 'bg-neo-bg text-neo-black'}
+                  `}
+                >
+                  {link.name}
+                </NavLink>
+              );
+            })}
+            
+            {user && (
+              <div className="ml-2 flex items-center justify-center w-10 h-10 rounded-full neo-border border-2 bg-white overflow-hidden shadow-[2px_2px_0_0_#000]">
+                {user.photoURL ? (
+                  <img src={user.photoURL.includes('googleusercontent.com') && user.photoURL.includes('=s96-c') ? user.photoURL.replace('=s96-c', '=s400-c') : (user.photoURL.includes('googleusercontent.com') && !user.photoURL.includes('=') ? `${user.photoURL}=s400-c` : user.photoURL)} alt={user.displayName || "User"} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                ) : (
+                  <UserIcon className="w-6 h-6 text-neo-black" />
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      </nav>
+
+      {/* Grid Pattern background for the entire app */}
+      <div 
+        className="fixed inset-0 z-[-1] opacity-50"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h40v40H0z' fill='none'/%3E%3Cpath d='M40 40H0V0h1v39h39v1z' fill='%23000' fill-opacity='0.1'/%3E%3C/svg%3E")`
+        }}
+      />
+
+      <main className="relative z-10 w-full overflow-hidden">
+        <Outlet />
+      </main>
+    </div>
+  );
+}

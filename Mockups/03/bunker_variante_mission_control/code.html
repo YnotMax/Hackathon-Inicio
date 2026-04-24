@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bunker Dashboard - Mission Control</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700;800&amp;family=Inter:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed": "#e2e2e2",
+                        "inverse-on-surface": "#f1f1f1",
+                        "secondary-fixed": "#ffdf91",
+                        "on-tertiary-container": "#848484",
+                        "surface-container-low": "#f3f3f3",
+                        "primary-container": "#1b1b1b",
+                        "tertiary": "#000000",
+                        "on-primary-container": "#848484",
+                        "accent-cyan": "#00E5FF",
+                        "background-alt": "#E5E5E5",
+                        "inverse-surface": "#303030",
+                        "on-secondary-fixed-variant": "#584400",
+                        "surface-variant": "#e2e2e2",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed": "#1b1b1b",
+                        "surface-tint": "#5e5e5e",
+                        "on-primary-fixed-variant": "#474747",
+                        "on-tertiary": "#ffffff",
+                        "secondary": "#755b00",
+                        "primary-fixed": "#e2e2e2",
+                        "surface-container": "#eeeeee",
+                        "error-container": "#ffdad6",
+                        "on-surface": "#1b1b1b",
+                        "surface-dim": "#dadada",
+                        "border-primary": "#000000",
+                        "accent-lime": "#B8FF29",
+                        "tertiary-fixed-dim": "#c6c6c6",
+                        "background-main": "#F4F4F0",
+                        "on-error": "#ffffff",
+                        "inverse-primary": "#c6c6c6",
+                        "background": "#f9f9f9",
+                        "on-background": "#1b1b1b",
+                        "surface-container-highest": "#e2e2e2",
+                        "surface-bright": "#f9f9f9",
+                        "on-tertiary-fixed": "#1b1b1b",
+                        "primary-fixed-dim": "#c6c6c6",
+                        "secondary-fixed-dim": "#f3c000",
+                        "on-secondary-fixed": "#241a00",
+                        "accent-yellow": "#FFC900",
+                        "outline": "#7e7576",
+                        "surface-container-lowest": "#ffffff",
+                        "accent-pink": "#FF2E93",
+                        "secondary-container": "#fdc800",
+                        "primary": "#000000",
+                        "surface-container-high": "#e8e8e8",
+                        "error": "#ba1a1a",
+                        "outline-variant": "#cfc4c5",
+                        "tertiary-container": "#1b1b1b",
+                        "on-secondary-container": "#6d5500",
+                        "on-surface-variant": "#4c4546",
+                        "surface": "#f9f9f9",
+                        "on-tertiary-fixed-variant": "#474747",
+                        "on-error-container": "#93000a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin": "32px",
+                        "gutter": "24px",
+                        "unit": "4px",
+                        "card-padding": "24px",
+                        "border-width": "3px"
+                    },
+                    "fontFamily": {
+                        "label": ["Space Grotesk"],
+                        "h2": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "h1": ["Space Grotesk"],
+                        "h3": ["Space Grotesk"],
+                        "body-bold": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label": ["14px", { "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "h2": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.03em", "fontWeight": "800" }],
+                        "body": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "h1": ["96px", { "lineHeight": "1.0", "letterSpacing": "-0.05em", "fontWeight": "800" }],
+                        "h3": ["24px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "body-bold": ["16px", { "lineHeight": "1.6", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: #F4F4F0; color: #000000; }
+        .bunker-shadow { box-shadow: 6px 6px 0px 0px rgba(0,0,0,1); }
+        .bunker-shadow-sm { box-shadow: 4px 4px 0px 0px rgba(0,0,0,1); }
+        .bunker-shadow-hover:hover { box-shadow: 8px 8px 0px 0px rgba(0,0,0,1); transform: translate(-2px, -2px); }
+        .bunker-active:active { transform: translate(6px, 6px); box-shadow: none !important; }
+        .bunker-border { border: 3px solid #000000; }
+        .bunker-border-thick { border: 4px solid #000000; }
+        .terminal-text { font-family: monospace; }
+        /* Blinking cursor effect */
+        .cursor-blink { animation: blink 1s step-end infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
+    </style>
+</head>
+<body class="flex flex-col md:flex-row h-screen overflow-hidden font-body bg-background-main text-primary">
+<!-- SideNavBar (Desktop Only) -->
+<nav class="hidden md:flex flex-col w-64 h-screen p-4 gap-4 overflow-y-auto bg-white dark:bg-zinc-900 border-r-4 border-black text-black dark:text-white shrink-0 z-40">
+<div class="flex flex-col gap-2 mb-6">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-4xl border-2 border-black p-1" data-icon="shield">shield</span>
+<div class="flex flex-col">
+<span class="font-h3 text-h3 uppercase font-black tracking-tighter">BUNKER_OS</span>
+<span class="font-label text-label text-on-surface-variant">V.4.02-BETA</span>
+</div>
+</div>
+<button class="mt-4 w-full bg-accent-cyan text-black font-label text-label uppercase bunker-border bunker-shadow bunker-active py-2 px-4 flex justify-center items-center gap-2 hover:bg-cyan-400 transition-colors">
+<span class="material-symbols-outlined" data-icon="play_arrow">play_arrow</span>
+                INITIATE_PROTOCOL
+            </button>
+</div>
+<div class="flex flex-col gap-2 flex-grow">
+<!-- Active Tab -->
+<a class="flex items-center gap-3 p-3 font-label text-label uppercase bg-lime-400 text-black border-2 border-black translate-x-1 translate-y-1 shadow-none" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+                OPERATIONS
+            </a>
+<a class="flex items-center gap-3 p-3 font-label text-label uppercase bg-white dark:bg-zinc-800 text-black dark:text-white border-2 border-black mb-2 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-cyan-400 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] active:translate-x-1 active:translate-y-1 active:shadow-none transition-all duration-75" href="#">
+<span class="material-symbols-outlined" data-icon="hub">hub</span>
+                NETWORK_STATUS
+            </a>
+<a class="flex items-center gap-3 p-3 font-label text-label uppercase bg-white dark:bg-zinc-800 text-black dark:text-white border-2 border-black mb-2 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-cyan-400 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] active:translate-x-1 active:translate-y-1 active:shadow-none transition-all duration-75" href="#">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+                PERSONNEL
+            </a>
+<a class="flex items-center gap-3 p-3 font-label text-label uppercase bg-white dark:bg-zinc-800 text-black dark:text-white border-2 border-black mb-2 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-cyan-400 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] active:translate-x-1 active:translate-y-1 active:shadow-none transition-all duration-75" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+                LOGISTICS
+            </a>
+<a class="flex items-center gap-3 p-3 font-label text-label uppercase bg-white dark:bg-zinc-800 text-black dark:text-white border-2 border-black mb-2 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-cyan-400 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] active:translate-x-1 active:translate-y-1 active:shadow-none transition-all duration-75" href="#">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+                SYSTEM_ARCHIVE
+            </a>
+</div>
+<div class="mt-auto border-t-2 border-black pt-4 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-full border-2 border-black bg-accent-pink flex items-center justify-center">
+<span class="material-symbols-outlined text-sm" data-icon="person">person</span>
+</div>
+<span class="font-label text-label text-xs uppercase">CMD_OFFICER</span>
+</div>
+<span class="material-symbols-outlined text-accent-cyan cursor-pointer" data-icon="settings">settings</span>
+</div>
+</nav>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col h-screen overflow-hidden">
+<!-- TopAppBar (Mobile & Desktop Header) -->
+<header class="sticky top-0 z-50 flex flex-row items-center justify-between w-full px-6 py-4 bg-white dark:bg-zinc-900 border-b-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-black dark:text-white">
+<div class="flex items-center gap-4">
+<!-- Mobile Menu Toggle (Visible only on md-) -->
+<button class="md:hidden bunker-border p-1 bg-accent-yellow bunker-shadow-sm bunker-active">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<div class="font-['Space_Grotesk'] text-2xl font-black italic tracking-tighter">
+                    GUILD_COMMAND
+                </div>
+</div>
+<!-- Search Bar (Right aligned) -->
+<div class="hidden md:flex items-center gap-2 bunker-border bg-white p-1 bunker-shadow-sm focus-within:border-4 focus-within:shadow-[6px_6px_0px_0px_#FFC900] transition-all">
+<span class="material-symbols-outlined px-2" data-icon="search">search</span>
+<input class="border-none focus:ring-0 outline-none font-label text-label uppercase text-sm w-48 bg-transparent" placeholder="QUERY_DATABASE..." type="text"/>
+</div>
+<div class="flex items-center gap-4">
+<button class="bunker-border p-2 bg-white hover:bg-yellow-400 hover:text-black transition-colors active:translate-y-1 active:shadow-none bunker-shadow-sm hidden sm:block">
+<span class="material-symbols-outlined" data-icon="terminal">terminal</span>
+</button>
+<button class="bunker-border p-2 bg-white hover:bg-yellow-400 hover:text-black transition-colors active:translate-y-1 active:shadow-none bunker-shadow-sm hidden sm:block">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<button class="bunker-border p-2 bg-accent-pink text-white hover:bg-yellow-400 hover:text-black transition-colors active:translate-y-1 active:shadow-none bunker-shadow-sm">
+<span class="material-symbols-outlined" data-icon="notifications_active">notifications_active</span>
+</button>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="flex-1 overflow-y-auto p-gutter relative">
+<!-- Page Header -->
+<div class="mb-gutter flex justify-between items-end border-b-4 border-black pb-4">
+<div>
+<h1 class="font-h2 text-h2 uppercase text-primary">SISTEMA DE SUPORTE A DECISÃO: ONLINE</h1>
+<p class="font-label text-label text-on-surface-variant mt-2 flex items-center gap-2">
+<span class="w-3 h-3 bg-accent-lime rounded-full border border-black inline-block animate-pulse"></span>
+                        STATUS: NOMINAL | UPTIME: 94.2% | LOCATION: SECTOR_7G
+                    </p>
+</div>
+<div class="hidden lg:flex gap-2">
+<button class="bg-accent-yellow text-primary font-label text-label uppercase py-2 px-4 bunker-border bunker-shadow bunker-active transition-transform">
+<span class="material-symbols-outlined align-middle mr-1" data-icon="autorenew">autorenew</span> REFRESH_DATA
+                    </button>
+<button class="bg-primary text-white font-label text-label uppercase py-2 px-4 bunker-border bunker-shadow bunker-active transition-transform">
+<span class="material-symbols-outlined align-middle mr-1" data-icon="download">download</span> EXPORT_LOG
+                    </button>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Core Metrics (Spans 8 cols) -->
+<div class="md:col-span-8 bg-white bunker-border bunker-shadow p-card-padding flex flex-col">
+<div class="flex justify-between items-center mb-6 border-b-2 border-black pb-2">
+<h2 class="font-h3 text-h3 uppercase text-primary flex items-center gap-2">
+<span class="material-symbols-outlined" data-icon="monitoring">monitoring</span>
+                            CORE_METRICS_ANALYSIS
+                        </h2>
+<span class="font-label text-label bg-accent-lime px-2 py-1 border-2 border-black">LIVE</span>
+</div>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4 flex-grow">
+<!-- Metric 1 -->
+<div class="bg-surface-container-low p-4 border-2 border-black flex flex-col justify-between hover:bg-yellow-100 transition-colors">
+<span class="font-label text-label text-on-surface-variant uppercase text-xs">CPU_LOAD</span>
+<div class="mt-4">
+<span class="font-h2 text-h2 text-primary block leading-none">87%</span>
+<div class="w-full h-4 border-2 border-black bg-white mt-2 relative">
+<div class="absolute top-0 left-0 h-full bg-accent-cyan border-r-2 border-black w-[87%]"></div>
+</div>
+</div>
+</div>
+<!-- Metric 2 -->
+<div class="bg-surface-container-low p-4 border-2 border-black flex flex-col justify-between hover:bg-yellow-100 transition-colors">
+<span class="font-label text-label text-on-surface-variant uppercase text-xs">MEM_ALLOC</span>
+<div class="mt-4">
+<span class="font-h2 text-h2 text-primary block leading-none">42GB</span>
+<div class="w-full h-4 border-2 border-black bg-white mt-2 relative">
+<div class="absolute top-0 left-0 h-full bg-accent-yellow border-r-2 border-black w-[60%]"></div>
+</div>
+</div>
+</div>
+<!-- Metric 3 -->
+<div class="bg-surface-container-low p-4 border-2 border-black flex flex-col justify-between hover:bg-pink-100 transition-colors">
+<span class="font-label text-label text-error uppercase text-xs font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="warning">warning</span> THERMAL_STATE
+                            </span>
+<div class="mt-4">
+<span class="font-h2 text-h2 text-error block leading-none">94°C</span>
+<div class="w-full h-4 border-2 border-black bg-white mt-2 relative">
+<div class="absolute top-0 left-0 h-full bg-error border-r-2 border-black w-[94%]"></div>
+</div>
+</div>
+</div>
+<!-- Metric 4 -->
+<div class="bg-surface-container-low p-4 border-2 border-black flex flex-col justify-between hover:bg-lime-100 transition-colors">
+<span class="font-label text-label text-on-surface-variant uppercase text-xs">NET_TRAFFIC</span>
+<div class="mt-4">
+<span class="font-h2 text-h2 text-primary block leading-none">1.2T/s</span>
+<div class="w-full h-4 border-2 border-black bg-white mt-2 relative overflow-hidden flex">
+<div class="h-full w-1/4 bg-primary border-r-2 border-black"></div>
+<div class="h-full w-1/4 bg-primary border-r-2 border-black ml-1"></div>
+<div class="h-full w-1/4 bg-primary border-r-2 border-black ml-1"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Terminal Log (Spans 4 cols) -->
+<div class="md:col-span-4 bg-primary text-accent-lime bunker-border bunker-shadow p-4 flex flex-col relative overflow-hidden h-[300px]">
+<div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-accent-cyan to-transparent opacity-50 z-10 animate-pulse"></div>
+<div class="flex justify-between items-center mb-4 border-b-2 border-accent-lime pb-2">
+<h2 class="font-label text-label uppercase tracking-widest text-accent-cyan flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="terminal">terminal</span>
+                            SYS_LOG_OUTPUT
+                        </h2>
+<button class="text-accent-lime hover:text-white"><span class="material-symbols-outlined text-[16px]" data-icon="open_in_full">open_in_full</span></button>
+</div>
+<div class="terminal-text text-sm flex-grow overflow-y-auto pr-2 opacity-90 leading-tight space-y-1">
+<p class="text-on-tertiary-container">[08:42:11] INITIALIZING SECURE CONNECTION...</p>
+<p class="text-accent-cyan">[08:42:12] CONNECTION ESTABLISHED. HANDSHAKE OK.</p>
+<p class="text-on-tertiary-container">[08:42:15] POLLING SECTOR 4 SENSORS...</p>
+<p class="text-error">[08:42:18] WARNING: ANOMALY DETECTED IN NODE_Alpha.</p>
+<p class="text-on-tertiary-container">[08:42:19] REROUTING POWER TO SUBSYSTEM B...</p>
+<p class="text-accent-lime">[08:42:22] POWER REROUTE SUCCESSFUL.</p>
+<p class="text-on-tertiary-container">[08:42:25] AWAITING MANUAL OVERRIDE <span class="cursor-blink">_</span></p>
+</div>
+</div>
+<!-- Gauge Cluster (Spans 6 cols) -->
+<div class="md:col-span-6 bg-accent-cyan bunker-border bunker-shadow p-card-padding">
+<h2 class="font-h3 text-h3 uppercase text-primary mb-6 border-b-2 border-black pb-2">ENVIRONMENTAL_CONTROL</h2>
+<div class="grid grid-cols-3 gap-4">
+<!-- Gauge 1 -->
+<div class="bg-white border-2 border-black p-4 flex flex-col items-center justify-center bunker-shadow-sm bunker-active cursor-pointer">
+<div class="w-16 h-16 rounded-full border-4 border-black border-t-accent-pink border-r-accent-pink flex items-center justify-center transform -rotate-45">
+<span class="material-symbols-outlined transform rotate-45 text-2xl" data-icon="air">air</span>
+</div>
+<span class="font-label text-label uppercase mt-4 text-center">O2_MIX</span>
+<span class="font-body-bold text-body-bold text-xl mt-1">78%</span>
+</div>
+<!-- Gauge 2 -->
+<div class="bg-white border-2 border-black p-4 flex flex-col items-center justify-center bunker-shadow-sm bunker-active cursor-pointer">
+<div class="w-16 h-16 rounded-full border-4 border-black border-t-accent-yellow border-r-accent-yellow border-b-accent-yellow flex items-center justify-center transform -rotate-45">
+<span class="material-symbols-outlined transform rotate-45 text-2xl" data-icon="water_drop">water_drop</span>
+</div>
+<span class="font-label text-label uppercase mt-4 text-center">HUMIDITY</span>
+<span class="font-body-bold text-body-bold text-xl mt-1">45%</span>
+</div>
+<!-- Gauge 3 -->
+<div class="bg-white border-2 border-black p-4 flex flex-col items-center justify-center bunker-shadow-sm bunker-active cursor-pointer">
+<div class="w-16 h-16 rounded-full border-4 border-black border-t-accent-lime flex items-center justify-center transform -rotate-45">
+<span class="material-symbols-outlined transform rotate-45 text-2xl" data-icon="compress">compress</span>
+</div>
+<span class="font-label text-label uppercase mt-4 text-center">PRESSURE</span>
+<span class="font-body-bold text-body-bold text-xl mt-1">1.02ATM</span>
+</div>
+</div>
+</div>
+<!-- Action Panel (Spans 6 cols) -->
+<div class="md:col-span-6 bg-white bunker-border bunker-shadow p-card-padding">
+<h2 class="font-h3 text-h3 uppercase text-primary mb-6 border-b-2 border-black pb-2">CRITICAL_ACTIONS</h2>
+<div class="grid grid-cols-2 gap-4">
+<button class="bg-accent-pink text-white font-h3 text-h3 uppercase p-6 bunker-border bunker-shadow-sm bunker-active flex flex-col items-center justify-center gap-2 hover:bg-pink-600 transition-colors">
+<span class="material-symbols-outlined text-4xl" data-icon="eject">eject</span>
+                            EMERGENCY_VENT
+                        </button>
+<button class="bg-accent-yellow text-primary font-h3 text-h3 uppercase p-6 bunker-border bunker-shadow-sm bunker-active flex flex-col items-center justify-center gap-2 hover:bg-yellow-500 transition-colors">
+<span class="material-symbols-outlined text-4xl" data-icon="lock">lock</span>
+                            LOCKDOWN_SECTOR
+                        </button>
+<button class="col-span-2 bg-primary text-accent-lime font-h3 text-h3 uppercase p-4 bunker-border bunker-shadow-sm bunker-active flex items-center justify-center gap-4 hover:bg-zinc-800 transition-colors">
+<span class="material-symbols-outlined text-3xl" data-icon="rocket_launch">rocket_launch</span>
+                            INITIATE_MAIN_SEQUENCE
+                        </button>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

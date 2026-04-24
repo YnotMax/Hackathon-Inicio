@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SISTEMA DE SUPORTE A DECISÃO: ONLINE</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700;800;900&amp;family=Inter:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-high": "#e8e8e8",
+                        "on-tertiary": "#ffffff",
+                        "inverse-on-surface": "#f1f1f1",
+                        "on-background": "#1b1b1b",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed-variant": "#474747",
+                        "on-primary-fixed-variant": "#474747",
+                        "secondary-container": "#fdc800",
+                        "background": "#f9f9f9",
+                        "primary-fixed-dim": "#c6c6c6",
+                        "surface-container-highest": "#e2e2e2",
+                        "on-surface-variant": "#4c4546",
+                        "border-primary": "#000000",
+                        "on-secondary-container": "#6d5500",
+                        "on-primary-fixed": "#1b1b1b",
+                        "primary-container": "#1b1b1b",
+                        "on-primary-container": "#848484",
+                        "on-secondary": "#ffffff",
+                        "surface-dim": "#dadada",
+                        "tertiary-container": "#1b1b1b",
+                        "on-tertiary-fixed": "#1b1b1b",
+                        "accent-pink": "#FF2E93",
+                        "primary": "#000000",
+                        "surface": "#f9f9f9",
+                        "tertiary": "#000000",
+                        "accent-cyan": "#00E5FF",
+                        "background-alt": "#E5E5E5",
+                        "surface-container": "#eeeeee",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "secondary": "#755b00",
+                        "surface-container-low": "#f3f3f3",
+                        "on-secondary-fixed-variant": "#584400",
+                        "on-error": "#ffffff",
+                        "background-main": "#F4F4F0",
+                        "secondary-fixed": "#ffdf91",
+                        "surface-tint": "#5e5e5e",
+                        "outline": "#7e7576",
+                        "on-secondary-fixed": "#241a00",
+                        "secondary-fixed-dim": "#f3c000",
+                        "tertiary-fixed-dim": "#c6c6c6",
+                        "on-error-container": "#93000a",
+                        "inverse-primary": "#c6c6c6",
+                        "surface-variant": "#e2e2e2",
+                        "inverse-surface": "#303030",
+                        "on-tertiary-container": "#848484",
+                        "on-surface": "#1b1b1b",
+                        "outline-variant": "#cfc4c5",
+                        "accent-yellow": "#FFC900",
+                        "surface-bright": "#f9f9f9",
+                        "primary-fixed": "#e2e2e2",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed": "#e2e2e2",
+                        "accent-lime": "#B8FF29"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin": "32px",
+                        "gutter": "24px",
+                        "unit": "4px",
+                        "card-padding": "24px",
+                        "border-width": "3px"
+                    },
+                    "fontFamily": {
+                        "label": ["Space Grotesk"],
+                        "body-bold": ["Inter"],
+                        "h2": ["Space Grotesk"],
+                        "h3": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "h1": ["Space Grotesk"]
+                    },
+                    "fontSize": {
+                        "label": ["14px", { "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "body-bold": ["16px", { "lineHeight": "1.6", "fontWeight": "700" }],
+                        "h2": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.03em", "fontWeight": "800" }],
+                        "h3": ["24px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "body": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "h1": ["96px", { "lineHeight": "1.0", "letterSpacing": "-0.05em", "fontWeight": "800" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background-main text-on-background min-h-screen font-body flex flex-col selection:bg-accent-pink selection:text-white">
+<!-- TopAppBar -->
+<header class="w-full border-b-4 border-black sticky top-0 z-50 bg-white dark:bg-zinc-900 text-black dark:text-white font-['Space_Grotesk'] font-bold uppercase tracking-tighter flex justify-between items-center h-20 px-8">
+<div class="text-2xl font-black italic bg-yellow-400 dark:bg-yellow-500 px-3 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+            GUILDA_CMD
+        </div>
+<nav class="hidden md:flex items-center gap-4">
+<a class="text-black dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all active:translate-x-[4px] active:translate-y-[4px] active:shadow-none py-2 px-4 border-2 border-transparent" href="#">MISSÕES</a>
+<a class="text-black dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all active:translate-x-[4px] active:translate-y-[4px] active:shadow-none py-2 px-4 border-2 border-transparent" href="#">EQUIPES</a>
+<a class="text-black dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all active:translate-x-[4px] active:translate-y-[4px] active:shadow-none py-2 px-4 border-2 border-transparent" href="#">RANKING</a>
+<a class="text-black dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all active:translate-x-[4px] active:translate-y-[4px] active:shadow-none py-2 px-4 border-2 border-transparent" href="#">ARSENAL</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="hover:bg-zinc-100 p-2 border-2 border-transparent hover:border-black transition-all">
+<span class="material-symbols-outlined">terminal</span>
+</button>
+<button class="hover:bg-zinc-100 p-2 border-2 border-transparent hover:border-black transition-all relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1 right-1 w-3 h-3 bg-accent-pink border-2 border-black rounded-full"></span>
+</button>
+<div class="w-10 h-10 border-2 border-black bg-accent-cyan overflow-hidden shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+<img alt="Avatar do Comandante" class="w-full h-full object-cover mix-blend-luminosity" data-alt="close up portrait of a tough commander looking directly at the camera with harsh dramatic lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQalWUy6QnBC34WEugm0FUkhZMzcalA37XJGWqkFCNfSBC6_0ZZcWPADo-jwuGYfihFbsofO5Bpifksg4Fyb8ElYecC_xb1IzVXKigi73r27G8zbQT8-sQy5Vb4FhAie5U5M5ysbqptskzdBGE6hIJ8zNFVs_5TgDt1r0nRleM_0Oj4s2tyaczVIPC1K-4qgnZkZoiiRcUsESvW-7IMQTqZgM52z8yqDWsX7dHCEQBfyPmOV7MetnAM5bbPnYZo4t7ROQE1m344GU"/>
+</div>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden">
+<!-- SideNavBar -->
+<aside class="h-screen w-72 border-r-4 border-black fixed left-0 top-0 hidden lg:flex flex-col bg-white dark:bg-zinc-900 text-black dark:text-white font-['Space_Grotesk'] font-bold uppercase shadow-[8px_0px_0px_0px_rgba(0,0,0,1)] z-40 pt-20">
+<div class="p-6 border-b-4 border-black bg-accent-lime">
+<h2 class="text-xl font-black text-black mb-1">COMANDO_CENTRAL</h2>
+<p class="text-xs tracking-widest text-black/70">STATUS: OPERACIONAL</p>
+</div>
+<nav class="flex flex-col p-4 gap-2 flex-1 overflow-y-auto">
+<a class="bg-pink-400 dark:bg-pink-500 border-4 border-black translate-x-[4px] translate-y-[4px] shadow-none py-3 px-4 mx-2 my-1 flex items-center gap-4 text-black" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+                    DASHBOARD
+                </a>
+<a class="border-2 border-transparent py-3 px-4 mx-2 my-1 flex items-center gap-4 text-black dark:text-zinc-300 hover:border-black hover:bg-zinc-50 dark:hover:bg-zinc-800 active:translate-x-[4px] active:translate-y-[4px] transition-transform" href="#">
+<span class="material-symbols-outlined">group</span>
+                    MEMBROS
+                </a>
+<a class="border-2 border-transparent py-3 px-4 mx-2 my-1 flex items-center gap-4 text-black dark:text-zinc-300 hover:border-black hover:bg-zinc-50 dark:hover:bg-zinc-800 active:translate-x-[4px] active:translate-y-[4px] transition-transform" href="#">
+<span class="material-symbols-outlined">account_tree</span>
+                    PROJETOS
+                </a>
+<a class="border-2 border-transparent py-3 px-4 mx-2 my-1 flex items-center gap-4 text-black dark:text-zinc-300 hover:border-black hover:bg-zinc-50 dark:hover:bg-zinc-800 active:translate-x-[4px] active:translate-y-[4px] transition-transform" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+                    LOGS
+                </a>
+<a class="border-2 border-transparent py-3 px-4 mx-2 my-1 flex items-center gap-4 text-black dark:text-zinc-300 hover:border-black hover:bg-zinc-50 dark:hover:bg-zinc-800 active:translate-x-[4px] active:translate-y-[4px] transition-transform" href="#">
+<span class="material-symbols-outlined">settings</span>
+                    CONFIG
+                </a>
+</nav>
+<div class="p-4 border-t-4 border-black">
+<button class="w-full bg-accent-yellow border-4 border-black py-4 px-4 font-black text-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all flex items-center justify-center gap-2 mb-4">
+<span class="material-symbols-outlined">add</span>
+                    NOVA_MISSÃO
+                </button>
+<div class="flex flex-col gap-2">
+<a class="border-2 border-transparent py-2 px-4 flex items-center gap-4 text-sm text-black dark:text-zinc-300 hover:border-black hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-all" href="#">
+<span class="material-symbols-outlined text-base">help</span>
+                        SUPORTE
+                    </a>
+<a class="border-2 border-transparent py-2 px-4 flex items-center gap-4 text-sm text-black dark:text-zinc-300 hover:border-black hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-all" href="#">
+<span class="material-symbols-outlined text-base">logout</span>
+                        SAIR
+                    </a>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 lg:ml-72 p-margin overflow-y-auto pb-32 lg:pb-margin relative w-full">
+<!-- Hero Section -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-gutter mb-margin">
+<div class="lg:col-span-12 border-4 border-black bg-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] p-8 md:p-12 relative overflow-hidden">
+<!-- Tech Background Elements -->
+<div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: radial-gradient(#000 2px, transparent 2px); background-size: 32px 32px;"></div>
+<div class="absolute top-0 right-0 w-64 h-64 border-l-4 border-b-4 border-black bg-accent-cyan/20 transform translate-x-32 -translate-y-32 rotate-45 pointer-events-none"></div>
+<div class="relative z-10 flex flex-col items-center text-center">
+<div class="inline-block border-2 border-black bg-accent-lime px-4 py-1 mb-6 font-label text-label uppercase shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+<span class="animate-pulse mr-2 inline-block w-2 h-2 bg-black rounded-full"></span>
+                            SISTEMA INICIADO
+                        </div>
+<h1 class="font-h1 text-h1 text-black uppercase mb-8 leading-none max-w-4xl break-words">
+                            SISTEMA DE SUPORTE A <span class="text-accent-pink bg-black px-2">DECISÃO:</span> ONLINE
+                        </h1>
+<p class="font-body-bold text-body-bold max-w-2xl mb-12 border-l-4 border-black pl-4 text-left bg-white/80 py-2">
+                            MÓDULO DE COMANDO CENTRAL ATIVADO. PREPARANDO INICIALIZAÇÃO DO PROTOCOLO PRINCIPAL. TODOS OS SISTEMAS NOMINAIS.
+                        </p>
+<!-- Brutalist Countdown -->
+<div class="flex flex-wrap justify-center gap-4 font-h2 text-h2 text-black">
+<div class="flex flex-col items-center">
+<div class="w-24 h-24 border-4 border-black bg-accent-yellow flex items-center justify-center shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]">
+                                    14
+                                </div>
+<span class="font-label text-label mt-2">DIAS</span>
+</div>
+<div class="flex flex-col items-center">
+<div class="w-24 h-24 border-4 border-black bg-white flex items-center justify-center shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]">
+                                    08
+                                </div>
+<span class="font-label text-label mt-2">HORAS</span>
+</div>
+<div class="flex flex-col items-center">
+<div class="w-24 h-24 border-4 border-black bg-white flex items-center justify-center shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]">
+                                    42
+                                </div>
+<span class="font-label text-label mt-2">MIN</span>
+</div>
+<div class="flex flex-col items-center">
+<div class="w-24 h-24 border-4 border-black bg-accent-cyan flex items-center justify-center shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]">
+                                    09
+                                </div>
+<span class="font-label text-label mt-2">SEG</span>
+</div>
+</div>
+<div class="mt-8 font-label text-label border-2 border-black bg-white px-6 py-2 inline-block">
+                            T-MINUS UNTIL: 27/06
+                        </div>
+</div>
+</div>
+</section>
+</main>
+</div>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full h-20 border-t-4 border-black lg:hidden z-50 bg-white dark:bg-zinc-900 text-black dark:text-white font-['Space_Grotesk'] text-[10px] font-black uppercase shadow-[0_-4px_0px_0px_rgba(0,0,0,1)] fixed bottom-0 left-0 w-full flex justify-around items-center">
+<a class="flex flex-col items-center justify-center bg-cyan-400 dark:bg-cyan-500 border-2 border-black h-full w-full active:translate-y-[2px]" href="#">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">home</span>
+            HOME
+        </a>
+<a class="flex flex-col items-center justify-center h-full w-full text-black dark:text-zinc-400 hover:bg-cyan-100 dark:hover:bg-zinc-800 active:translate-y-[2px] transition-colors border-2 border-transparent" href="#">
+<span class="material-symbols-outlined mb-1">bolt</span>
+            SQUAD
+        </a>
+<a class="flex flex-col items-center justify-center h-full w-full text-black dark:text-zinc-400 hover:bg-cyan-100 dark:hover:bg-zinc-800 active:translate-y-[2px] transition-colors border-2 border-transparent" href="#">
+<span class="material-symbols-outlined mb-1">code</span>
+            CODE
+        </a>
+<a class="flex flex-col items-center justify-center h-full w-full text-black dark:text-zinc-400 hover:bg-cyan-100 dark:hover:bg-zinc-800 active:translate-y-[2px] transition-colors border-2 border-transparent" href="#">
+<span class="material-symbols-outlined mb-1">person</span>
+            PERFIL
+        </a>
+</nav>
+</body></html>

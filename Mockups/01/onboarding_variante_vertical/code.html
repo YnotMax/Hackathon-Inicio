@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SINC. MEMBRO - Team Canvas</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700;800&amp;family=Inter:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "background-alt": "#E5E5E5",
+                      "error-container": "#ffdad6",
+                      "on-secondary-fixed": "#241a00",
+                      "accent-cyan": "#00E5FF",
+                      "primary-container": "#1b1b1b",
+                      "on-error-container": "#93000a",
+                      "surface": "#f9f9f9",
+                      "on-secondary-fixed-variant": "#584400",
+                      "surface-container-high": "#e8e8e8",
+                      "on-surface-variant": "#4c4546",
+                      "on-error": "#ffffff",
+                      "secondary-container": "#fdc800",
+                      "primary": "#000000",
+                      "secondary-fixed-dim": "#f3c000",
+                      "accent-pink": "#FF2E93",
+                      "on-tertiary": "#ffffff",
+                      "inverse-primary": "#c6c6c6",
+                      "outline": "#7e7576",
+                      "on-tertiary-fixed": "#1b1b1b",
+                      "on-primary": "#ffffff",
+                      "on-primary-fixed-variant": "#474747",
+                      "surface-tint": "#5e5e5e",
+                      "error": "#ba1a1a",
+                      "on-primary-container": "#848484",
+                      "inverse-surface": "#303030",
+                      "tertiary-container": "#1b1b1b",
+                      "surface-bright": "#f9f9f9",
+                      "background": "#f9f9f9",
+                      "secondary-fixed": "#ffdf91",
+                      "accent-yellow": "#FFC900",
+                      "on-primary-fixed": "#1b1b1b",
+                      "tertiary": "#000000",
+                      "on-secondary-container": "#6d5500",
+                      "surface-dim": "#dadada",
+                      "accent-lime": "#B8FF29",
+                      "tertiary-fixed": "#e2e2e2",
+                      "surface-container-highest": "#e2e2e2",
+                      "secondary": "#755b00",
+                      "primary-fixed": "#e2e2e2",
+                      "primary-fixed-dim": "#c6c6c6",
+                      "surface-variant": "#e2e2e2",
+                      "inverse-on-surface": "#f1f1f1",
+                      "border-primary": "#000000",
+                      "background-main": "#F4F4F0",
+                      "surface-container-low": "#f3f3f3",
+                      "surface-container": "#eeeeee",
+                      "on-tertiary-fixed-variant": "#474747",
+                      "surface-container-lowest": "#ffffff",
+                      "on-secondary": "#ffffff",
+                      "tertiary-fixed-dim": "#c6c6c6",
+                      "on-background": "#1b1b1b",
+                      "outline-variant": "#cfc4c5",
+                      "on-tertiary-container": "#848484",
+                      "on-surface": "#1b1b1b"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "24px",
+                      "margin": "32px",
+                      "card-padding": "24px",
+                      "border-width": "3px",
+                      "unit": "4px"
+              },
+              "fontFamily": {
+                      "body": [
+                              "Inter"
+                      ],
+                      "h1": [
+                              "Space Grotesk"
+                      ],
+                      "h2": [
+                              "Space Grotesk"
+                      ],
+                      "label": [
+                              "Space Grotesk"
+                      ],
+                      "h3": [
+                              "Space Grotesk"
+                      ],
+                      "body-bold": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "body": [
+                              "16px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "h1": [
+                              "96px",
+                              {
+                                      "lineHeight": "1.0",
+                                      "letterSpacing": "-0.05em",
+                                      "fontWeight": "800"
+                              }
+                      ],
+                      "h2": [
+                              "48px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "letterSpacing": "-0.03em",
+                                      "fontWeight": "800"
+                              }
+                      ],
+                      "label": [
+                              "14px",
+                              {
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "h3": [
+                              "24px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-bold": [
+                              "16px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "700"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        .neo-shadow {
+            box-shadow: 6px 6px 0px 0px rgba(0,0,0,1);
+        }
+        .neo-shadow-hover:hover {
+            box-shadow: 8px 8px 0px 0px rgba(0,0,0,1);
+            transform: translate(-2px, -2px);
+        }
+        .neo-shadow-active:active {
+            box-shadow: 0px 0px 0px 0px rgba(0,0,0,1);
+            transform: translate(6px, 6px);
+        }
+        .tilt-hover:hover {
+            transform: rotate(1deg) scale(1.01);
+            transition: all 0.2s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-background-main text-on-background font-body min-h-screen flex flex-col pt-20 pl-0 md:pl-64">
+<!-- TopAppBar -->
+<nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 h-20 bg-white dark:bg-zinc-900 text-black dark:text-white font-['Space_Grotesk'] font-bold uppercase tracking-tighter docked full-width border-b-4 border-black dark:border-white shadow-[0px_4px_0px_0px_rgba(0,0,0,1)]">
+<div class="flex items-center gap-4">
+<span class="text-3xl font-black text-black dark:text-white border-2 border-black dark:border-white px-2 italic">COMMAND_HQ</span>
+</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-zinc-500 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors active:translate-y-1 transition-transform" href="#">DASHBOARD</a>
+<a class="text-black dark:text-white underline decoration-4 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors active:translate-y-1 transition-transform" href="#">TEAM_CANVAS</a>
+<a class="text-zinc-500 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors active:translate-y-1 transition-transform" href="#">RADAR_TECH</a>
+<a class="text-zinc-500 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors active:translate-y-1 transition-transform" href="#">BUNKER_LOGS</a>
+<a class="text-zinc-500 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors active:translate-y-1 transition-transform" href="#">SYSTEM_VETO</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="w-10 h-10 flex items-center justify-center border-2 border-black dark:border-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors active:translate-y-1 transition-transform">
+<span class="material-symbols-outlined">terminal</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center border-2 border-black dark:border-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors active:translate-y-1 transition-transform">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="w-10 h-10 border-2 border-black dark:border-white overflow-hidden bg-accent-lime">
+<img alt="OPERATOR_AVATAR" class="w-full h-full object-cover mix-blend-luminosity" data-alt="close up portrait of a cyberpunk operator with neon green lighting and reflective glasses" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDKIDj9PreWA8gP7pdG_tmIBXBTvF9bjuWcAtaYqOYg3R2at-8UKjCHqmKArlSf2CGZk5xxXtayKYG_c-vtwiCsN0beOMGlDo36UUltcg9XfXtKlFiNgLReE3oipK8llr5ex3-QyXsUnhKYoGlzgmBejbHDd71HoqaLc8vSiUgA_ac4bcFKx4avyMIsugw8p6lHTf6R84qNfNKbnOItjcRcJNmNcFu5XY87t0Uhrpl4yascqLMwbCnUKoC97SzMAZA2Wpvx2SeSSvs"/>
+</div>
+</div>
+</nav>
+<!-- SideNavBar -->
+<aside class="hidden md:flex fixed left-0 top-20 h-[calc(100vh-80px)] flex flex-col justify-between py-8 px-4 bg-white dark:bg-zinc-950 text-black dark:text-white font-['Space_Grotesk'] font-black uppercase text-sm docked border-r-4 border-black dark:border-white w-64 shadow-[6px_0px_0px_0px_rgba(0,0,0,1)] z-40">
+<div class="flex flex-col gap-8">
+<div class="flex items-center gap-4 px-4 pb-6 border-b-4 border-black dark:border-white">
+<div class="w-12 h-12 border-2 border-black dark:border-white overflow-hidden bg-accent-cyan neo-shadow">
+<img alt="COMMANDER_RANK" class="w-full h-full object-cover" data-alt="black and white intense portrait of a man with harsh lighting and shadow" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAlEwJTuyN_46VmLibfuUiPGxdHUiEicKHIiD47YCbA43s_rcgrpjy-ZdTdJo6YrNZQgs3sOfnb-uNhNxv5zcVTmVSoa-iAJhtJU9aoDAPkoIprSnHh3PtjVxXWWY2DW2JemMjJhtxBBCQrGn_F4IF6-omzR0cz71M6PAMmMYf7IaPsN-RKY8c1gFmfuYCn0-GYIdwDD8jkMif4ZuTGQmXFLWCRpV4QmR4QUoP5WHH6xkag88g2vw1lwwyH3NFD64SBDrqUU5gFzPo"/>
+</div>
+<div>
+<div class="font-h3 text-h3 leading-none">OPERATOR_01</div>
+<div class="font-label text-label text-zinc-500 mt-1">SECTOR_7G</div>
+</div>
+</div>
+<nav class="flex flex-col gap-2">
+<a class="bg-transparent text-black dark:text-white p-4 border-2 border-transparent flex items-center gap-3 hover:border-black dark:hover:border-white hover:translate-x-1 transition-all active:translate-x-2 active:shadow-none" href="#">
+<span class="material-symbols-outlined">grid_view</span>
+                    DASHBOARD
+                </a>
+<a class="bg-black text-white dark:bg-white dark:text-black p-4 border-2 border-black flex items-center gap-3 hover:border-black dark:hover:border-white hover:translate-x-1 transition-all active:translate-x-2 active:shadow-none neo-shadow" href="#">
+<span class="material-symbols-outlined">groups</span>
+                    TEAM_CANVAS
+                </a>
+<a class="bg-transparent text-black dark:text-white p-4 border-2 border-transparent flex items-center gap-3 hover:border-black dark:hover:border-white hover:translate-x-1 transition-all active:translate-x-2 active:shadow-none" href="#">
+<span class="material-symbols-outlined">radar</span>
+                    RADAR_TECH
+                </a>
+<a class="bg-transparent text-black dark:text-white p-4 border-2 border-transparent flex items-center gap-3 hover:border-black dark:hover:border-white hover:translate-x-1 transition-all active:translate-x-2 active:shadow-none" href="#">
+<span class="material-symbols-outlined">terminal</span>
+                    BUNKER_LOGS
+                </a>
+<a class="bg-transparent text-black dark:text-white p-4 border-2 border-transparent flex items-center gap-3 hover:border-black dark:hover:border-white hover:translate-x-1 transition-all active:translate-x-2 active:shadow-none" href="#">
+<span class="material-symbols-outlined">block</span>
+                    SYSTEM_VETO
+                </a>
+</nav>
+</div>
+<div class="flex flex-col gap-4 mt-auto pt-8 border-t-4 border-black dark:border-white">
+<button class="bg-accent-lime text-black border-4 border-black p-4 font-bold uppercase tracking-widest neo-shadow neo-shadow-hover neo-shadow-active transition-all w-full text-center">
+                DEPLOY_CHANGES
+            </button>
+<a class="bg-transparent text-black dark:text-white p-4 border-2 border-transparent flex items-center gap-3 hover:border-black dark:hover:border-white hover:translate-x-1 transition-all active:translate-x-2 active:shadow-none text-red-600 dark:text-red-400" href="#">
+<span class="material-symbols-outlined">logout</span>
+                LOGOUT
+            </a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 p-gutter lg:p-margin flex flex-col gap-gutter max-w-7xl mx-auto w-full">
+<header class="mb-4">
+<h1 class="font-h1 text-h2 md:text-h1 uppercase border-b-4 border-black pb-4 inline-block pr-8 bg-accent-lime px-4 neo-shadow transform -rotate-1">
+                SINC. MEMBRO
+            </h1>
+</header>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter flex-1">
+<!-- Left Side: RADAR TECH (Sliders) -->
+<div class="lg:col-span-5 bg-white border-[4px] border-black p-card-padding neo-shadow flex flex-col gap-8 h-full tilt-hover">
+<div class="flex items-center gap-4 border-b-4 border-black pb-4">
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">radar</span>
+<h2 class="font-h2 text-h3 uppercase m-0">RADAR TECH</h2>
+</div>
+<div class="flex flex-col gap-6 flex-1 justify-center">
+<!-- Slider 1 -->
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-end">
+<label class="font-label text-label uppercase">Frontend Eng.</label>
+<span class="font-body-bold text-body-bold">85%</span>
+</div>
+<div class="h-10 w-full bg-background border-4 border-black relative">
+<div class="absolute top-0 left-0 h-full bg-accent-cyan border-r-4 border-black w-[85%] flex items-center justify-end pr-2">
+<div class="w-6 h-6 bg-black"></div>
+</div>
+</div>
+</div>
+<!-- Slider 2 -->
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-end">
+<label class="font-label text-label uppercase">Backend Arch.</label>
+<span class="font-body-bold text-body-bold">60%</span>
+</div>
+<div class="h-10 w-full bg-background border-4 border-black relative">
+<div class="absolute top-0 left-0 h-full bg-accent-pink border-r-4 border-black w-[60%] flex items-center justify-end pr-2">
+<div class="w-6 h-6 bg-black rounded-full"></div>
+</div>
+</div>
+</div>
+<!-- Slider 3 -->
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-end">
+<label class="font-label text-label uppercase">UX/UI Design</label>
+<span class="font-body-bold text-body-bold">40%</span>
+</div>
+<div class="h-10 w-full bg-background border-4 border-black relative">
+<div class="absolute top-0 left-0 h-full bg-accent-cyan border-r-4 border-black w-[40%] flex items-center justify-end pr-2">
+<div class="w-6 h-6 bg-black"></div>
+</div>
+</div>
+</div>
+<!-- Slider 4 -->
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-end">
+<label class="font-label text-label uppercase">DevOps/Infra</label>
+<span class="font-body-bold text-body-bold">90%</span>
+</div>
+<div class="h-10 w-full bg-background border-4 border-black relative">
+<div class="absolute top-0 left-0 h-full bg-accent-pink border-r-4 border-black w-[90%] flex items-center justify-end pr-2">
+<div class="w-6 h-6 bg-black rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Side: Vibe Cards -->
+<div class="lg:col-span-7 flex flex-col gap-gutter h-full">
+<!-- LOVE Card -->
+<div class="bg-accent-lime border-[4px] border-black p-card-padding neo-shadow tilt-hover flex-1 flex flex-col justify-center relative overflow-hidden group cursor-pointer">
+<div class="absolute -right-10 -top-10 opacity-20 transform rotate-12 group-hover:rotate-45 transition-transform duration-500">
+<span class="material-symbols-outlined text-[150px]" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</div>
+<div class="relative z-10 flex flex-col gap-4 max-w-[80%]">
+<h2 class="font-h2 text-h2 uppercase bg-black text-white inline-block px-4 py-2 self-start transform -rotate-2">LOVE</h2>
+<p class="font-body-bold text-h3 leading-tight border-l-4 border-black pl-4">Building chaotic, high-performance interfaces that break the generic mold.</p>
+</div>
+</div>
+<!-- EXCEL Card -->
+<div class="bg-accent-yellow border-[4px] border-black p-card-padding neo-shadow tilt-hover flex-1 flex flex-col justify-center relative overflow-hidden group cursor-pointer">
+<div class="absolute -right-10 -top-10 opacity-20 transform -rotate-12 group-hover:-rotate-45 transition-transform duration-500">
+<span class="material-symbols-outlined text-[150px]" style="font-variation-settings: 'FILL' 1;">bolt</span>
+</div>
+<div class="relative z-10 flex flex-col gap-4 max-w-[80%]">
+<h2 class="font-h2 text-h2 uppercase bg-black text-white inline-block px-4 py-2 self-start transform rotate-2">EXCEL</h2>
+<p class="font-body-bold text-h3 leading-tight border-l-4 border-black pl-4">Rapid prototyping, system architecture mapping, and coffee consumption.</p>
+</div>
+</div>
+<!-- VETO Card -->
+<div class="bg-accent-pink border-[4px] border-black p-card-padding neo-shadow tilt-hover flex-1 flex flex-col justify-center relative overflow-hidden group cursor-pointer">
+<div class="absolute -right-10 -top-10 opacity-20 transform rotate-6 group-hover:scale-125 transition-transform duration-500">
+<span class="material-symbols-outlined text-[150px]" style="font-variation-settings: 'FILL' 1;">block</span>
+</div>
+<div class="relative z-10 flex flex-col gap-4 max-w-[80%]">
+<h2 class="font-h2 text-h2 uppercase bg-black text-white inline-block px-4 py-2 self-start transform -rotate-1">VETO</h2>
+<p class="font-body-bold text-h3 leading-tight border-l-4 border-black pl-4 text-white">Soft shadows, rounded corners, and "clean" corporate dashboards.</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

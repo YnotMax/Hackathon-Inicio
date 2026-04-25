@@ -52,12 +52,15 @@ export function PostModal({ isOpen, onClose, post, userId }: PostModalProps) {
     if (isOpen) {
       setCurrentIndex(0);
       document.body.style.overflow = "hidden";
+      document.body.classList.add("hide-nav");
     } else {
       document.body.style.overflow = "unset";
+      document.body.classList.remove("hide-nav");
       setIsLoadingMedia(true);
     }
     return () => {
       document.body.style.overflow = "unset";
+      document.body.classList.remove("hide-nav");
     };
   }, [isOpen]);
 

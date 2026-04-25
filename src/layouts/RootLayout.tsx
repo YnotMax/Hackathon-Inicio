@@ -16,7 +16,7 @@ export default function RootLayout() {
 
   return (
     <div className="min-h-screen bg-neo-bg text-neo-black selection:bg-neo-lime selection:text-neo-black font-sans relative">
-      <nav className="border-b-[4px] border-neo-black bg-white sticky top-0 z-50">
+      <nav id="main-nav" className="border-b-[4px] border-neo-black bg-white sticky top-0 z-[40]">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between p-4 px-6 gap-4">
           <div className="flex items-center gap-3">
              <div className="bg-neo-black p-2"><Terminal className="text-neo-lime w-6 h-6" /></div>

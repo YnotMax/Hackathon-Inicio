@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion } from "motion/react";
 import { Button } from "../components/ui/Button";
 import { useNavigate } from "react-router-dom";
@@ -13,6 +13,126 @@ export type TimelineEvent = PostData & {
   log: string;
   icon: any;
 };
+
+// --- NEO-BRUTALIST PARTICLES COMPONENT ---
+const NeoParticles = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let animationFrameId: number;
+    let particles: Array<{ x: number, y: number, size: number, speedX: number, speedY: number, color: string, rotation: number, rotationSpeed: number, type: 'square' | 'triangle' | 'cross' }> = [];
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+
+    const colors = ["#B8FF29", "#FF2E93", "#00E5FF", "#FFE600", "#1A1A1A"];
+
+    const init = () => {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width;
+      canvas.height = height;
+
+      particles = [];
+      const numParticles = Math.min(window.innerWidth / 30, 40); // responsive count
+      for (let i = 0; i < numParticles; i++) {
+        particles.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          size: Math.random() * 20 + 10,
+          speedX: (Math.random() - 0.5) * 2,
+          speedY: (Math.random() - 0.5) * 2,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          rotation: Math.random() * Math.PI * 2,
+          rotationSpeed: (Math.random() - 0.5) * 0.05,
+          type: Math.random() > 0.6 ? 'square' : (Math.random() > 0.5 ? 'triangle' : 'cross')
+        });
+      }
+    };
+
+    const drawSquare = (ctx: CanvasRenderingContext2D, size: number) => {
+      ctx.fillRect(-size / 2, -size / 2, size, size);
+      ctx.strokeRect(-size / 2, -size / 2, size, size);
+    };
+
+    const drawTriangle = (ctx: CanvasRenderingContext2D, size: number) => {
+      ctx.beginPath();
+      ctx.moveTo(0, -size / 2);
+      ctx.lineTo(size / 2, size / 2);
+      ctx.lineTo(-size / 2, size / 2);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+    };
+
+    const drawCross = (ctx: CanvasRenderingContext2D, size: number) => {
+      const ts = size / 3;
+      ctx.beginPath();
+      ctx.moveTo(-ts, -size/2); ctx.lineTo(ts, -size/2); ctx.lineTo(ts, -ts);
+      ctx.lineTo(size/2, -ts); ctx.lineTo(size/2, ts); ctx.lineTo(ts, ts);
+      ctx.lineTo(ts, size/2); ctx.lineTo(-ts, size/2); ctx.lineTo(-ts, ts);
+      ctx.lineTo(-size/2, ts); ctx.lineTo(-size/2, -ts); ctx.lineTo(-ts, -ts);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+    };
+
+    const animate = () => {
+      ctx.clearRect(0, 0, width, height);
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = '#000';
+
+      particles.forEach(p => {
+        p.x += p.speedX;
+        p.y += p.speedY;
+        p.rotation += p.rotationSpeed;
+
+        if (p.x < -p.size) p.x = width + p.size;
+        if (p.x > width + p.size) p.x = -p.size;
+        if (p.y < -p.size) p.y = height + p.size;
+        if (p.y > height + p.size) p.y = -p.size;
+
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rotation);
+        ctx.fillStyle = p.color;
+
+        ctx.shadowColor = '#000';
+        ctx.shadowOffsetX = 4;
+        ctx.shadowOffsetY = 4;
+
+        if (p.type === 'square') drawSquare(ctx, p.size);
+        else if (p.type === 'triangle') drawTriangle(ctx, p.size);
+        else drawCross(ctx, p.size);
+
+        ctx.restore();
+      });
+
+      animationFrameId = requestAnimationFrame(animate);
+    };
+
+    init();
+    animate();
+
+    window.addEventListener('resize', init);
+    return () => {
+      window.removeEventListener('resize', init);
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, []);
+
+  return (
+    <canvas 
+      ref={canvasRef} 
+      className="fixed inset-0 pointer-events-none z-0 opacity-40 mix-blend-multiply"
+    />
+  );
+};
+// --- END NEO-BRUTALIST PARTICLES COMPONENT ---
 
 const TIMELINE_DATA: TimelineEvent[] = [
   {
@@ -97,6 +217,7 @@ export default function Bunker() {
 
   return (
     <div className="flex min-h-screen bg-neo-bg bg-[linear-gradient(to_right,#e5e5e5_1px,transparent_1px),linear-gradient(to_bottom,#e5e5e5_1px,transparent_1px)] bg-[size:32px_32px]">
+      <NeoParticles />
       {/* Main Content */}
       <main className="flex-1 p-4 md:p-8 overflow-y-auto relative w-full pt-16"> {/* Removed sidebar, expanded main */}
         <div className="max-w-4xl mx-auto space-y-8">
@@ -106,9 +227,61 @@ export default function Bunker() {
              {/* Tech grid overlay */}
              <div className="absolute inset-0 z-0 opacity-20 bg-[linear-gradient(to_right,#000_2px,transparent_2px),linear-gradient(to_bottom,#000_2px,transparent_2px)] bg-[size:32px_32px]"></div>
 
-             {/* Decorative Rocket/Shape */}
-             <div className="absolute -right-10 -bottom-10 opacity-30 mix-blend-multiply group-hover:rotate-12 transition-transform duration-700 pointer-events-none">
-                <svg width="300" height="300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path><path d="m12 15-3-3a22 22 0 0 1 3.86-12A2 2 0 0 1 15 4a22 22 0 0 1 12 3.86l-3 3"></path><path d="m14 11 3 3"></path><path d="m11 14-3-3"></path><path d="m9 9 3 3"></path></svg>
+             {/* Decorative Animated Rocket */}
+             <div className="absolute -right-10 -bottom-10 md:-right-4 md:-top-16 opacity-100 group-hover:scale-110 group-hover:-rotate-12 transition-transform duration-700 pointer-events-none z-0 hidden sm:block rotate-12">
+                <motion.svg 
+                  width="280" 
+                  height="280" 
+                  viewBox="0 0 100 100"
+                  animate={{ y: [0, -10, 0] }}
+                  transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+                  className="drop-shadow-[8px_8px_0_rgba(0,0,0,1)]"
+                >
+                    {/* Fire Main */}
+                    <motion.path 
+                        d="M 40 80 L 50 105 L 60 80 Z" 
+                        fill="#B8FF29" stroke="#000" strokeWidth="3" strokeLinejoin="round"
+                        animate={{ scaleY: [1, 1.3, 1], opacity: [0.8, 1, 0.8] }}
+                        transition={{ repeat: Infinity, duration: 0.15 }}
+                        style={{ transformOrigin: 'center 80px' }}
+                    />
+                    {/* Fire Inner */}
+                    <motion.path 
+                        d="M 44 80 L 50 95 L 56 80 Z" 
+                        fill="#fff" stroke="#000" strokeWidth="2" strokeLinejoin="round"
+                        animate={{ scaleY: [1, 1.5, 1] }}
+                        transition={{ repeat: Infinity, duration: 0.1 }}
+                        style={{ transformOrigin: 'center 80px' }}
+                    />
+                    
+                    {/* Base */}
+                    <path d="M 35 75 L 65 75 L 60 80 L 40 80 Z" fill="#000" />
+                    
+                    {/* Left Fin */}
+                    <path d="M 38 55 L 20 80 L 38 75 Z" fill="#00E5FF" stroke="#000" strokeWidth="3" strokeLinejoin="round" />
+                    {/* Right Fin */}
+                    <path d="M 62 55 L 80 80 L 62 75 Z" fill="#00E5FF" stroke="#000" strokeWidth="3" strokeLinejoin="round" />
+                    
+                    {/* Main Body */}
+                    <path d="M 50 15 C 75 40 65 65 62 75 L 38 75 C 35 65 25 40 50 15 Z" fill="#fff" stroke="#000" strokeWidth="3" strokeLinejoin="round" />
+                    
+                    {/* Tip */}
+                    <path d="M 43 32 C 45 25 50 15 50 15 C 50 15 55 25 57 32 Z" fill="#FF2E93" stroke="#000" strokeWidth="3" strokeLinejoin="round" />
+
+                    {/* Window Outer */}
+                    <circle cx="50" cy="48" r="8" fill="#1A1A1A" stroke="#000" strokeWidth="3" />
+                    {/* Window Detail */}
+                    <circle cx="52" cy="46" r="2" fill="#fff" />
+                    
+                    {/* Deco Lines */}
+                    <path d="M 42 66 L 58 66 M 40 70 L 60 70" stroke="#000" strokeWidth="3" strokeLinecap="round" />
+
+                    {/* Action Stars/Lines */}
+                    <motion.path d="M 15 25 L 25 35" stroke="#000" strokeWidth="4" strokeLinecap="round" animate={{ opacity: [0, 1, 0], x: [-5, 0], y: [5, 0] }} transition={{ repeat: Infinity, duration: 1 }} />
+                    <motion.path d="M 85 25 L 75 35" stroke="#000" strokeWidth="4" strokeLinecap="round" animate={{ opacity: [0, 1, 0], x: [5, 0], y: [5, 0] }} transition={{ repeat: Infinity, duration: 1.2, delay: 0.2 }} />
+                    <motion.circle cx="20" cy="55" r="3" fill="#000" animate={{ scale: [0, 1, 0] }} transition={{ repeat: Infinity, duration: 0.8 }} />
+                    <motion.circle cx="85" cy="65" r="2" fill="#000" animate={{ scale: [0, 1, 0] }} transition={{ repeat: Infinity, duration: 1.5 }} />
+                </motion.svg>
              </div>
              
              <h1 className="text-4xl md:text-5xl lg:text-7xl font-heading font-black text-white leading-none uppercase relative z-10 tracking-tight" style={{ textShadow: '4px 4px 0 #000' }}>
@@ -167,7 +340,6 @@ export default function Bunker() {
                </div>
                <div className="flex flex-col sm:flex-row items-center gap-4 relative z-10">
                  <p className="font-mono text-[14px] uppercase font-bold bg-neo-black text-white px-4 py-2 mt-2 sm:mt-0 shadow-[2px_2px_0px_#fff]">27/Jun &bull; 00:00</p>
-                 <Button size="sm" className="w-full sm:w-auto px-6 text-[11px] font-black neo-border h-10 bg-neo-black text-white hover:bg-white hover:text-neo-black tracking-widest shadow-[2px_2px_0px_#fff]">VER_BRIEFING</Button>
                </div>
             </div>
           </div>
@@ -266,125 +438,7 @@ export default function Bunker() {
              </div>
           </div>
 
-          {/* Bottom Indicators */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 pt-16">
-            <div className="bg-white neo-border neo-shadow-hover p-6 md:p-8 group transition-all duration-300 relative">
-              <div className="absolute -top-3 -left-3 bg-neo-yellow neo-border px-2 font-black text-xs transform -rotate-2">
-                 SYS_PERF
-              </div>
-              <h4 className="font-mono font-black border-b-[3px] border-black pb-3 mb-5 uppercase flex items-center justify-between tracking-tight text-lg">
-                RECURSOS
-                <div className="flex gap-1 bg-neo-bg border-2 border-black p-1.5">
-                  <div className="w-1.5 h-1.5 bg-neo-lime animate-pulse border border-black" />
-                  <div className="w-1.5 h-1.5 bg-neo-lime animate-pulse [animation-delay:200ms] border border-black" />
-                  <div className="w-1.5 h-1.5 bg-neo-lime animate-pulse [animation-delay:400ms] border border-black" />
-                </div>
-              </h4>
-              <div className="space-y-5 font-mono text-xs">
-                 <div className="space-y-1">
-                    <div className="flex justify-between font-black"><span className="bg-neo-black text-white px-1">LINK_EXT</span><strong className="text-neo-lime drop-shadow-[1px_1px_0_#000]">99.9%</strong></div>
-                    <div className="h-4 w-full bg-gray-100 border-[3px] border-neo-black p-[2px] overflow-hidden">
-                       <motion.div 
-                        initial={{ width: 0 }}
-                        animate={{ width: '99%' }}
-                        className="h-full bg-neo-lime border-r-2 border-neo-black relative overflow-hidden" 
-                       >
-                         <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(0,0,0,0.1)_50%,transparent_75%)] bg-[size:16px_16px]"></div>
-                       </motion.div>
-                    </div>
-                 </div>
-                 <div className="space-y-1">
-                    <div className="flex justify-between font-black"><span className="bg-neo-black text-white px-1">GEMINI_API</span><strong className="text-neo-pink drop-shadow-[1px_1px_0_#000]">72%</strong></div>
-                    <div className="h-4 w-full bg-gray-100 border-[3px] border-neo-black p-[2px] overflow-hidden">
-                       <motion.div 
-                        initial={{ width: 0 }}
-                        animate={{ width: '72%' }}
-                        className="h-full bg-neo-pink border-r-2 border-neo-black relative overflow-hidden" 
-                       >
-                         <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(0,0,0,0.1)_50%,transparent_75%)] bg-[size:16px_16px]"></div>
-                       </motion.div>
-                    </div>
-                 </div>
-                 <div className="grid grid-cols-2 gap-3 pt-3">
-                    <div className="border-[3px] border-neo-black p-3 bg-neo-yellow shadow-[2px_2px_0px_#000]">
-                       <p className="text-[9px] text-gray-800 mb-1 font-bold">COFFEE_REQ</p>
-                       <p className="font-black text-sm">PENDENTE</p>
-                    </div>
-                    <div className="border-[3px] border-neo-black p-3 bg-white shadow-[2px_2px_0px_#000]">
-                       <p className="text-[9px] text-gray-800 mb-1 font-bold">ERR_LOGS</p>
-                       <p className="font-black text-sm text-neo-pink drop-shadow-[1px_1px_0_#000]">0.00%</p>
-                    </div>
-                 </div>
-              </div>
-            </div>
 
-            <div className="bg-neo-lime neo-border neo-shadow-hover p-6 md:p-8 relative overflow-hidden flex flex-col justify-between">
-              <div className="absolute top-0 right-0 p-2 opacity-5 pointer-events-none">
-                <Users className="w-32 h-32 -mr-8 -mt-8 rotate-12" />
-              </div>
-              <div>
-                <div className="flex justify-between items-start mb-6 border-b-[3px] border-black pb-3 relative z-10">
-                  <h4 className="font-mono font-black uppercase text-xl tacking-tight">EQUIPE_ALFA</h4>
-                  <div className="bg-neo-black text-white text-[9px] px-2 py-1 font-bold tracking-widest flex items-center gap-2 neo-border shadow-[2px_2px_0_#fff]">
-                    <span className="w-2 h-2 bg-neo-lime border border-neo-black rounded-full animate-pulse" />
-                    VOICE_SYNC
-                  </div>
-                </div>
-                <div className="flex -space-x-4 mb-6 relative z-10">
-                   {[1,2,3,4].map(i => (
-                     <div key={i} className="relative group/avatar">
-                        <img 
-                          src={`https://i.pravatar.cc/100?img=${i+14}`} 
-                          alt="avatar" 
-                          className="w-14 h-14 rounded-full border-[3px] border-neo-black transition-transform group-hover/avatar:-translate-y-2 group-hover/avatar:shadow-[0_4px_0_#000]" 
-                        />
-                     </div>
-                   ))}
-                   <div className="w-14 h-14 rounded-full border-[3px] border-neo-black bg-neo-black text-white flex items-center justify-center text-sm font-black z-10 hover:bg-neo-pink hover:-translate-y-2 transition-all hover:shadow-[0_4px_0_#000] cursor-pointer">
-                      +4
-                   </div>
-                </div>
-              </div>
-              <div className="font-mono space-y-2 relative z-10 bg-white p-3 neo-border shadow-[4px_4px_0_#000]">
-                <div className="flex justify-between text-[11px] font-black">
-                   <span className="bg-neo-black text-white px-1">BPM_SQUAD</span>
-                   <span className="text-neo-pink drop-shadow-[1px_1px_0_#000]">74 BPM</span>
-                </div>
-                <div className="flex gap-[2px] h-3 items-end">
-                   {[...Array(30)].map((_, i) => (
-                     <motion.div 
-                      key={i} 
-                      animate={{ height: [4, 12, 4] }}
-                      transition={{ 
-                        repeat: Infinity, 
-                        duration: 0.5 + Math.random(), 
-                        delay: i * 0.1 
-                      }}
-                      className={`flex-1 ${i < 24 ? 'bg-neo-black' : 'bg-neo-black/20'}`} 
-                     />
-                   ))}
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-neo-black text-white neo-border neo-shadow-hover p-6 md:p-8 transform rotate-1 md:-translate-y-4 hover:rotate-0 transition-transform duration-300 flex flex-col justify-between relative overflow-hidden pattern-dots">
-              <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]"></div>
-              
-              <div className="relative z-10">
-                <h4 className="font-mono font-black border-b-[3px] border-neo-pink text-neo-pink pb-3 mb-5 uppercase text-xl flex items-center gap-2">
-                   <AlertTriangle className="w-6 h-6 animate-pulse" /> ALERTA
-                </h4>
-                <p className="font-mono text-sm leading-relaxed mb-6 font-bold bg-white text-neo-black p-3 neo-border shadow-[4px_4px_0_#FF2E93]">
-                  &gt; VERIFIQUE O ESTADO DA VPN ANTES DO KICKOFF.<br/><br/>
-                  &gt; POSSÍVEIS INTERFERÊNCIAS NO SETOR SUL.
-                </p>
-              </div>
-              
-              <Button className="w-full bg-neo-pink text-white font-black text-lg hover:bg-white hover:text-neo-black neo-border relative z-10 py-6 hover:shadow-[4px_4px_0_#B8FF29]">
-                RESOLVER_AGORA
-              </Button>
-            </div>
-          </div>
 
         </div>
       </main>

@@ -259,15 +259,12 @@ export default function Onboarding() {
         userId: user.uid,
         guildId: "TECH_FLORIPA_2026",
         name: form.name.trim(),
-        photoURL: user.photoURL,
+        photoURL: user.photoURL || null,
         github: cleanGithub,
         linkedin: cleanLinkedin,
         primaryRole: form.primaryRole,
         secondaryRoles: form.secondaryRoles,
         skills,
-        loves: form.loves,
-        comfort: form.comfort,
-        veto: form.veto,
         canvas: {
           loves: form.loves,
           comfort: form.comfort,
@@ -704,9 +701,6 @@ export default function Onboarding() {
                 <div className="h-64 neo-border border-4 bg-neo-bg flex items-center justify-center relative overflow-hidden group/chart cursor-crosshair">
                    <div className="absolute inset-0 opacity-10 pointer-events-none bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:12px_12px]"></div>
                    
-                   {/* Scanning Effect Overlay */}
-                   <div className="absolute inset-x-0 h-1 bg-neo-lime top-0 animate-[scan_4s_linear_infinite] pointer-events-none z-20 shadow-[0_0_15px_#B8FF29]"></div>
-
                    <ResponsiveContainer width="100%" height="100%">
                       <RadarChart cx="50%" cy="50%" outerRadius="80%" data={radarData}>
                         <PolarGrid stroke="#000" strokeWidth={1} strokeDasharray="3 3" />
@@ -750,9 +744,6 @@ export default function Onboarding() {
           </Card>
           
           <div className="bg-neo-pink text-white p-5 neo-border border-4 shadow-[8px_8px_0_0_#000] font-mono text-[10px] space-y-2 relative overflow-hidden group">
-            <div className="absolute top-0 right-0 p-2 opacity-20 group-hover:opacity-100 transition-opacity">
-              <Info className="w-4 h-4" />
-            </div>
             <p className="font-black text-white">&gt; MONITORAMENTO_STATUS:</p>
             <div className="grid grid-cols-2 gap-2">
               <p className="opacity-80">LOVES: {form.loves.length}</p>

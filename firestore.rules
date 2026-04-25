@@ -22,6 +22,8 @@ service cloud.firestore {
         && data.name is string && data.name.size() > 0 && data.name.size() <= 100
         && data.primaryRole is string && data.primaryRole.size() <= 100
         && data.secondaryRoles is list && data.secondaryRoles.size() <= 10
+        && (!('photoURL' in data) || data.photoURL == null || (data.photoURL is string && data.photoURL.size() <= 2000))
+        && (!('updatedAt' in data) || data.updatedAt is timestamp)
         && (!('github' in data) || (data.github is string && data.github.size() <= 100))
         && (!('linkedin' in data) || (data.linkedin is string && data.linkedin.size() <= 100))
         && (!('roast' in data) || (data.roast is string && data.roast.size() <= 8000))
@@ -37,6 +39,10 @@ service cloud.firestore {
         && data.canvas.veto is list && data.canvas.veto.size() <= 50;
     }
 
+    match /test/connection {
+      allow read: if true;
+    }
+
     match /members/{memberId} {
       allow get: if isSignedIn();
       allow list: if isSignedIn() && resource.data.guildId == 'TECH_FLORIPA_2026';
@@ -46,7 +52,7 @@ service cloud.firestore {
         && memberId == request.auth.uid
         && isValidMember(incoming())
         && incoming().createdAt == request.time
-        && incoming().keys().hasOnly(['userId', 'guildId', 'name', 'github', 'linkedin', 'primaryRole', 'secondaryRoles', 'skills', 'canvas', 'roast', 'createdAt']);
+        && incoming().keys().hasOnly(['userId', 'guildId', 'name', 'photoURL', 'github', 'linkedin', 'primaryRole', 'secondaryRoles', 'skills', 'canvas', 'roast', 'createdAt', 'updatedAt']);
 
       allow update: if isSignedIn()
         && isValidId(memberId)
@@ -55,7 +61,7 @@ service cloud.firestore {
         && incoming().guildId == existing().guildId
         && incoming().createdAt == existing().createdAt
         && (
-          (incoming().diff(existing()).affectedKeys().hasOnly(['skills', 'canvas', 'name', 'github', 'linkedin', 'primaryRole', 'secondaryRoles']))
+          (incoming().diff(existing()).affectedKeys().hasOnly(['skills', 'canvas', 'name', 'photoURL', 'github', 'linkedin', 'primaryRole', 'secondaryRoles', 'updatedAt', 'roast']))
           ||
           false
         );

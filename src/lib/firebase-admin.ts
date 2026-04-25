@@ -11,7 +11,14 @@ let auth: any;
 
 try {
   if (!getApps().length) {
-    initializeApp();
+    if (process.env.FIREBASE_SERVICE_ACCOUNT) {
+      const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+      initializeApp({
+        credential: cert(serviceAccount)
+      });
+    } else {
+      initializeApp();
+    }
   }
   db = getFirestore();
   auth = getAuth();

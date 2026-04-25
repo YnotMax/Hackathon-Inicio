@@ -323,7 +323,7 @@ export default function Onboarding() {
               onClick={signIn} 
               variant="primary" 
               size="xl" 
-              className="w-full text-xl glitch-hover relative overflow-hidden"
+              className="w-full text-xl relative overflow-hidden"
               disabled={loading}
             >
               {loading ? "VALIDANDO..." : "AUTENTICAR VIA GOOGLE"}
@@ -741,7 +741,7 @@ export default function Onboarding() {
                 onClick={handleSubmit} 
                 variant={(form.loves.length + form.veto.length) >= 10 ? "accent-lime" : "primary"} 
                 size="xl" 
-                className={`w-full text-xl py-6 transition-all ${ (form.loves.length + form.veto.length) >= 10 ? 'glitch-hover scale-105 shadow-[0_0_20px_#B8FF29]/30' : 'opacity-50 grayscale cursor-not-allowed'}`} 
+                className={`w-full text-xl py-6 transition-all ${ (form.loves.length + form.veto.length) >= 10 ? 'scale-105 shadow-[0_0_20px_#B8FF29]/30' : 'opacity-50 grayscale cursor-not-allowed'}`} 
                 disabled={loading || (form.loves.length + form.veto.length) < 10}
               >
                 {loading ? "PROCESSANDO..." : (form.loves.length + form.veto.length) < 10 ? "BLOQUEADO" : "REGISTRAR OPERADOR"}

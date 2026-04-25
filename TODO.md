@@ -57,7 +57,7 @@ Iniciando ciclo de testes e validação de "Desenvolvedor Especialista em Verifi
 
 - [x] **Onboarding 2.0**: Implementado Tag Master Pool (Mutual Exclusion) com 3 estados por tag e categorização por cores.
 - [x] **Passport Digital**: Gráfico de radar (Spider Chart) em tempo real + Seleção de Classe Primária/Secundária.
-- [x] **Neo-Inputs**: Sliders e Botões customizados com estética "Teclado Mecânico" e efeito Glitch.
+- [x] **Neo-Inputs**: Sliders e Botões customizados com estética "Teclado Mecânico".
 - [ ] **Componente Canvas/3D**: Fundo interativo com partículas no Bunker.
 - [ ] **Service Worker (PWA)**: Tornar a plataforma instalável.
 

@@ -117,8 +117,8 @@ export default function Bunker() {
           </div>
 
           {/* Countdown & Status Row */}
-          <div className="flex flex-col xl:flex-row gap-6">
-            <div className="flex-1 bg-white neo-border neo-shadow p-6 md:p-8 flex flex-col lg:flex-row items-center justify-between gap-6 md:gap-10 relative overflow-hidden group bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:16px_16px]">
+          <div className="flex flex-col gap-6">
+            <div className="w-full bg-white neo-border neo-shadow p-6 md:p-8 flex flex-col lg:flex-row items-center justify-between gap-6 md:gap-10 relative overflow-hidden group bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:16px_16px]">
               <div className="absolute top-0 right-0 p-1 opacity-20 group-hover:opacity-100 italic font-mono text-[8px] bg-neo-lime border-b-[3px] border-l-[3px] border-neo-black z-10 transition-opacity">
                 ENCRYPTED_STREAM_ON
               </div>
@@ -139,8 +139,8 @@ export default function Bunker() {
                   <span className="relative z-10">{timeLeft.hours.toString().padStart(2, '0')}</span>
                   <span className="font-sans font-bold text-[11px] text-center absolute -bottom-7 left-0 right-0 tracking-widest" style={{ textShadow: 'none', color: '#000' }}>HORAS</span>
                 </div>
-                <span className="relative -top-2 xl:hidden 2xl:block text-neo-black" style={{ textShadow: 'none' }}>:</span>
-                <div className="bg-neo-pink text-white neo-border border-[4px] px-2 sm:px-4 py-3 min-w-[70px] sm:min-w-[90px] text-center flex flex-col relative transition-transform hover:-translate-y-1 xl:hidden 2xl:flex">
+                <span className="relative -top-2 text-neo-black" style={{ textShadow: 'none' }}>:</span>
+                <div className="bg-neo-pink text-white neo-border border-[4px] px-2 sm:px-4 py-3 min-w-[70px] sm:min-w-[90px] text-center flex flex-col relative transition-transform hover:-translate-y-1">
                   <div className="overflow-hidden relative h-full flex items-center justify-center">
                     <motion.div
                       key={timeLeft.minutes}
@@ -156,14 +156,18 @@ export default function Bunker() {
               </div>
             </div>
 
-            <div className="w-full xl:w-64 bg-neo-cyan neo-border neo-shadow p-6 flex flex-col items-center justify-center text-center gap-1 group relative overflow-hidden">
+            <div className="w-full bg-neo-cyan neo-border neo-shadow p-6 flex flex-col md:flex-row items-center justify-between text-center md:text-left gap-4 group relative overflow-hidden">
                <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.2)_50%,transparent_75%)] bg-[size:250%_250%,100%_100%] animate-[scan_3s_linear_infinite] z-0"></div>
-               <Zap className="w-10 h-10 mb-2 group-hover:scale-110 transition-transform relative z-10" strokeWidth={3} />
-               <p className="font-mono text-[11px] uppercase font-bold text-gray-800 tracking-wider relative z-10 bg-white px-2 neo-border">PRÓXIMO_GATILHO</p>
-               <h3 className="font-heading font-black text-4xl relative z-10 mt-2 mb-2 tracking-tighter" style={{ textShadow: '2px 2px 0 #fff' }}>FASE 02</h3>
-               <div className="w-full border-t-[3px] border-neo-black mt-2 pt-3 space-y-3 relative z-10">
-                 <p className="font-mono text-[12px] uppercase font-bold bg-neo-black text-white px-2 py-1 inline-block">27/Jun &bull; 00:00</p>
-                 <Button size="sm" className="w-full text-[10px] font-black neo-border h-10 bg-neo-black text-white hover:bg-white hover:text-neo-black tracking-widest shadow-[2px_2px_0px_#fff]">VER_BRIEFING</Button>
+               <div className="flex items-center gap-4 relative z-10">
+                 <Zap className="w-12 h-12 group-hover:scale-110 transition-transform hidden sm:block" strokeWidth={3} />
+                 <div>
+                   <p className="font-mono text-[11px] uppercase font-bold text-gray-800 tracking-wider bg-white px-2 neo-border inline-block mb-1">PRÓXIMO_GATILHO</p>
+                   <h3 className="font-heading font-black text-4xl tracking-tighter" style={{ textShadow: '2px 2px 0 #fff' }}>FASE 02</h3>
+                 </div>
+               </div>
+               <div className="flex flex-col sm:flex-row items-center gap-4 relative z-10">
+                 <p className="font-mono text-[14px] uppercase font-bold bg-neo-black text-white px-4 py-2 mt-2 sm:mt-0 shadow-[2px_2px_0px_#fff]">27/Jun &bull; 00:00</p>
+                 <Button size="sm" className="w-full sm:w-auto px-6 text-[11px] font-black neo-border h-10 bg-neo-black text-white hover:bg-white hover:text-neo-black tracking-widest shadow-[2px_2px_0px_#fff]">VER_BRIEFING</Button>
                </div>
             </div>
           </div>

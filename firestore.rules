@@ -27,6 +27,8 @@ service cloud.firestore {
         && (!('github' in data) || (data.github is string && data.github.size() <= 100))
         && (!('linkedin' in data) || (data.linkedin is string && data.linkedin.size() <= 100))
         && (!('roast' in data) || (data.roast is string && data.roast.size() <= 8000))
+        && (!('roastBrutal' in data) || (data.roastBrutal is string && data.roastBrutal.size() <= 8000))
+        && (!('roastMild' in data) || (data.roastMild is string && data.roastMild.size() <= 8000))
         && data.skills is map
         && data.skills.keys().hasAll(['frontend', 'backend', 'ux_ui', 'dados', 'hardware_android', 'vibe_coding'])
         && data.skills.frontend is number && data.skills.backend is number 
@@ -52,7 +54,7 @@ service cloud.firestore {
         && memberId == request.auth.uid
         && isValidMember(incoming())
         && incoming().createdAt == request.time
-        && incoming().keys().hasOnly(['userId', 'guildId', 'name', 'photoURL', 'github', 'linkedin', 'primaryRole', 'secondaryRoles', 'skills', 'canvas', 'roast', 'createdAt', 'updatedAt']);
+        && incoming().keys().hasOnly(['userId', 'guildId', 'name', 'photoURL', 'github', 'linkedin', 'primaryRole', 'secondaryRoles', 'skills', 'canvas', 'roast', 'roastBrutal', 'roastMild', 'createdAt', 'updatedAt']);
 
       allow update: if isSignedIn()
         && isValidId(memberId)
@@ -61,7 +63,7 @@ service cloud.firestore {
         && incoming().guildId == existing().guildId
         && incoming().createdAt == existing().createdAt
         && (
-          (incoming().diff(existing()).affectedKeys().hasOnly(['skills', 'canvas', 'name', 'photoURL', 'github', 'linkedin', 'primaryRole', 'secondaryRoles', 'updatedAt', 'roast']))
+          (incoming().diff(existing()).affectedKeys().hasOnly(['skills', 'canvas', 'name', 'photoURL', 'github', 'linkedin', 'primaryRole', 'secondaryRoles', 'updatedAt', 'roast', 'roastBrutal', 'roastMild']))
           ||
           false
         );

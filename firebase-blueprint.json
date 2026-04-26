@@ -52,7 +52,8 @@
           },
           "required": ["loves", "comfort", "veto"]
         },
-        "roast": { "type": "string", "description": "The AI generated roast" },
+        "roastBrutal": { "type": "string", "description": "The AI generated brutal roast" },
+        "roastMild": { "type": "string", "description": "The AI generated mild mentor feedback" },
         "createdAt": { "type": "string", "format": "date-time" }
       },
       "required": ["userId", "guildId", "name", "skills", "canvas", "createdAt"]

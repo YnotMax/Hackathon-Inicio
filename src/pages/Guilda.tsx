@@ -146,6 +146,15 @@ export default function Guilda() {
       const data = await res.json();
       
       if (data.roast) {
+        try {
+          await updateDoc(doc(db, "members", m.id), {
+             roast: data.roast,
+             updatedAt: new Date()
+          });
+        } catch (dbErr) {
+          console.error("Erro ao salvar sina no banco:", dbErr);
+          // Mesmo se falhar, mostramos para o usuario
+        }
         setSelectedMember({ ...m, roast: data.roast });
       } else {
         alert("Erro no backend: " + JSON.stringify(data));

@@ -17,13 +17,7 @@ export default defineConfig(({mode}) => {
           short_name: 'TechFloripa',
           description: 'Plataforma de Comando da Guilda Tech Floripa 2026',
           theme_color: '#B8FF29',
-          icons: [
-            {
-              src: 'plataforma_comando_hackathon_visao.md', // Dummy placeholder just to pass validation or we can create an icon later
-              sizes: '192x192',
-              type: 'image/png'
-            }
-          ]
+          icons: [] // Deixando vazio até termos um favicon real
         }
       })
     ],

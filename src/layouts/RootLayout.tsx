@@ -124,7 +124,7 @@ export default function RootLayout() {
         }}
       />
 
-      <main className="relative z-10 w-full overflow-hidden">
+      <main className="w-full flex-1">
         <Outlet />
       </main>
     </div>

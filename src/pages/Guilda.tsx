@@ -387,13 +387,13 @@ export default function Guilda() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-neo-black/90 backdrop-blur-md overflow-y-auto"
+            className="fixed inset-0 z-[100] flex items-start justify-center p-4 py-20 sm:p-8 sm:py-24 bg-neo-black/90 backdrop-blur-md overflow-y-auto"
           >
             <motion.div 
               initial={{ scale: 0.9, y: 50, rotate: -2 }}
               animate={{ scale: 1, y: 0, rotate: 0 }}
               exit={{ scale: 0.9, y: 50, rotate: 2 }}
-              className="max-w-3xl w-full mx-auto my-8 relative"
+              className="max-w-3xl w-full mx-auto relative mb-12"
             >
               <div className="absolute -top-8 -right-4 sm:-right-8 z-10">
                  <button 

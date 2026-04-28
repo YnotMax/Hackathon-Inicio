@@ -18,7 +18,7 @@ export default function App() {
               <Route index element={<Bunker />} />
               <Route path="onboarding" element={<Onboarding />} />
               <Route path="guilda" element={<Guilda />} />
-              <Route path="oraculo" element={<Oraculo />} />
+              {/* <Route path="oraculo" element={<Oraculo />} /> */}
             </Route>
           </Routes>
         </BrowserRouter>

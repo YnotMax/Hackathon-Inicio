@@ -17,7 +17,7 @@ export default function RootLayout() {
     { name: "O BUNKER", path: "/" },
     { name: "ONBOARDING", path: "/onboarding" },
     { name: "A GUILDA", path: "/guilda" },
-    { name: "ORÁCULO", path: "/oraculo" },
+    // { name: "ORÁCULO", path: "/oraculo" }, // Ocultado por enquanto
   ];
 
   const getHighResPhotoUrl = (url: string | null) => {
